@@ -32,11 +32,7 @@ Cat & Cat::operator=(Cat const &r_obj)
         {
             delete _Brain;
             _Brain = NULL;
-
-            // *_Brain = r_obj.getmyBrain();
-            // r_obj.getmyBrain() ;
-            _Brain = r_obj.getmyBrain();
-            std::cout << _Brain << std::endl;
+            _Brain = new Brain(r_obj.getmyBrain());
         }
     }
 
@@ -48,17 +44,15 @@ void Cat::makeSound(void) const
     std::cout << "Cat sounds." <<std::endl;
 }
 
-Brain * Cat::getmyBrain(void) const
+Brain & Cat::getmyBrain(void) const
 {
-    std::cout << _Brain << std::endl;
-    Brain *test = new Brain(*_Brain);
-    return test;
+    return (*_Brain);
 }
 
-void Cat::whatIsFistThingInMyHead(void) const
-{
-    std::cout << _Brain->getFirstIdea() <<std::endl;
-}
+// void Cat::whatIsFistThingInMyHead(void) const
+// {
+//     std::cout << _Brain->getFirstIdea() <<std::endl;
+// }
 // class Cat
 // {
 //     public:

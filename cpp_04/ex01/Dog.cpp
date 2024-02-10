@@ -25,7 +25,15 @@ Dog::~Dog(void)
 Dog & Dog::operator=(Dog const &r_obj)
 {
     if(this != &r_obj)
+    {
         Animal::setType(r_obj.getType());
+        if(_Brain)
+        {
+            delete _Brain;
+            _Brain = NULL;
+            _Brain = new Brain(r_obj.getmyBrain());
+        }
+    }
     return (*this);
 }
 
@@ -34,13 +42,12 @@ void Dog::makeSound(void) const
     std::cout << "Dog sounds." <<std::endl;
 }
 
-Brain Dog::getmyBrain(void) const
+Brain & Dog::getmyBrain(void) const
 {
-    Brain new_brain = *_Brain;
-    return new_brain;
+    return (*_Brain);
 }
 
-void Dog::whatIsFistThingInMyHead(void) const
-{
-    std::cout << _Brain->getFirstIdea() <<std::endl;
-}
+// void Dog::whatIsFistThingInMyHead(void) const
+// {
+//     std::cout << _Brain->getFirstIdea() <<std::endl;
+// }

@@ -13,9 +13,9 @@ class Cat : public Animal
 	    Cat & operator=(Cat const &r_obj);
 	    ~Cat(void);
 
-        void whatIsFistThingInMyHead(void) const;
+        // void whatIsFistThingInMyHead(void) const;
         void makeSound(void) const;
-        Brain * getmyBrain(void) const;
+        Brain & getmyBrain(void) const;
 };
 
 #endif

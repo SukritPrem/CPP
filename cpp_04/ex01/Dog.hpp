@@ -14,8 +14,8 @@ class Dog : public Animal
 	    Dog & operator=(Dog const &r_obj);
 	    ~Dog(void);
         void makeSound(void) const;
-        Brain getmyBrain(void) const;
-        virtual void whatIsFistThingInMyHead(void) const;
+        Brain & getmyBrain(void) const;
+        // virtual void whatIsFistThingInMyHead(void) const;
 };
 
 #endif

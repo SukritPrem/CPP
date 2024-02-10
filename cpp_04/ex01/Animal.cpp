@@ -34,9 +34,9 @@ void Animal::makeSound(void) const
     std::cout << "Animal sounds." <<std::endl;
 }
 
-void Animal::whatIsFistThingInMyHead(void) const{
-    std::cout << "Brain...." <<std::endl;  
-}
+// void Animal::whatIsFistThingInMyHead(void) const{
+//     std::cout << "Brain...." <<std::endl;  
+// }
     // protected:
     //     std::string type;
     // public:

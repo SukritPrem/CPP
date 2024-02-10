@@ -22,10 +22,10 @@ int main(void)
 
     *j_1 = *meta_1;
     std::cout << j_1->getType() << " " << std::endl;
-    j_1->whatIsFistThingInMyHead();
-    meta_1->whatIsFistThingInMyHead();
-    j_1->makeSound();
-    meta_1->makeSound();
+    // j_1->whatIsFistThingInMyHead();
+    // meta_1->whatIsFistThingInMyHead();
+    // j_1->makeSound();
+    // meta_1->makeSound();
     delete meta_1;
     delete j_1;
 }
