@@ -3,9 +3,15 @@ NAME = a.out
 CC = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS =  main.cpp  AMateria.cpp  Ice.cpp   MateriaSource.cpp
+SRCS =  main.cpp  AMateria.cpp  Ice.cpp   MateriaSource.cpp Character.cpp Floor.cpp
 
-HEADERS =  AMateria.hpp Ice.hpp  MateriaSource.hpp IMateriaSource.hpp
+HEADERS =  AMateria.hpp Ice.hpp  \
+			MateriaSource.hpp \
+			IMateriaSource.hpp \
+			ICharacter.hpp \
+			Character.hpp \
+			Floor.hpp
+
 
 OBJS = $(SRCS:.cpp=.o)
 

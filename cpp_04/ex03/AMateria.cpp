@@ -44,11 +44,12 @@ std::string const & AMateria::getType(void) const
 //     return new AMateria(_type);
 // }
 
-// void AMateria::use(ICharacter & target)
-// {
-// }
-
-void AMateria::use(std::string & target) // for Dev before use ICharacter class
+void AMateria::use(ICharacter & target)
 {
-    std::cout << "AMateria use called " << target <<std::endl;
+  std::cout << target.getName();
 }
+
+// void AMateria::use(std::string & target) // for Dev before use ICharacter class
+// {
+//     std::cout << "AMateria use called " << target <<std::endl;
+// }

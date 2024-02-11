@@ -2,16 +2,23 @@
 # define CHARACTER_H
 
 #include "ICharacter.hpp"
-#define LENGTH 4
-class Character : virtual public ICharacter
+#include "Floor.hpp"
+#include <iostream>
+#include "AMateria.hpp"
+#ifndef LENGTH 
+# define LENGTH 4
+#endif
+class Character :  public ICharacter
 {
     private:
-        std::string name;
-        AMateria * _myMateria[LENGTH];
+        std::string _name;
+        AMateria    *_myMateria[LENGTH];
+        Floor       floor;
+        size_t      _idx;
     public:
         Character(void);
         ~Character(void);
-        Character(Character & name);
+        Character(std::string name);
 
         void    setName(std::string &name);
         std::string const & getName(void) const;

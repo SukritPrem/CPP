@@ -1,6 +1,6 @@
 #include "Ice.hpp"
 
-Ice::Ice(void) : AMateria("Ice")
+Ice::Ice(void) : AMateria("ice")
 {
     std::cout << "Ice Construtor void called" << std::endl; 
 }
@@ -17,6 +17,11 @@ Ice & Ice::operator=(Ice &r_obj)
         _type = r_obj.getType();
     }
     return (*this);
+}
+
+void Ice::use(ICharacter & target)
+{
+    std::cout << "* shoots an " <<  _type  <<"bolt at bob *" << target.getName() << std::endl;
 }
 
 Ice::~Ice(void)
