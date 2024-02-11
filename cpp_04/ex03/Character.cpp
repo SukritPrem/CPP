@@ -52,6 +52,8 @@ void    Character::use(int idx, ICharacter & target)
 
 void Character::equip(AMateria* m)
 {
+    if(m == NULL)
+        return ;
     for(int i = 0;i < LENGTH; i++)
     {
         if(m == floor.getFromFloor(m) && _myMateria[i] == NULL)
