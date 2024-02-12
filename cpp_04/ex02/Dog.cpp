@@ -9,7 +9,7 @@ Dog::Dog(void)
 
 Dog::Dog(Dog const &r_obj)
 {
-    Animal::setType(r_obj.getType());
+    AAnimal::setType(r_obj.getType());
 }   
 
 Dog::~Dog(void)
@@ -26,7 +26,7 @@ Dog & Dog::operator=(Dog const &r_obj)
 {
     if(this != &r_obj)
     {
-        Animal::setType(r_obj.getType());
+        AAnimal::setType(r_obj.getType());
         if(_Brain)
         {
             delete _Brain;

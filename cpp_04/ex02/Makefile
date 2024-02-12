@@ -3,9 +3,9 @@ NAME = a.out
 CC = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS =  main.cpp Dog.cpp Cat.cpp Animal.cpp Brain.cpp
+SRCS =  main.cpp Dog.cpp Cat.cpp AAnimal.cpp Brain.cpp
 
-HEADERS =  Dog.hpp Cat.hpp Animal.hpp Brain.hpp
+HEADERS =  Dog.hpp Cat.hpp AAnimal.hpp Brain.hpp
 
 OBJS = $(SRCS:.cpp=.o)
 

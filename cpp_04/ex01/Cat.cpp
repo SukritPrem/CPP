@@ -46,6 +46,7 @@ void Cat::makeSound(void) const
 
 Brain & Cat::getmyBrain(void) const
 {
+    std::cout << "Address my Brain " << _Brain <<std::endl;
     return (*_Brain);
 }
 

@@ -18,9 +18,7 @@ Animal::~Animal(void)
 
 Animal & Animal::operator=(Animal const &r_obj)
 {
-    //     std::cout << "this" << std::endl;
-    // std::cout << this << std::endl;
-    // std::cout << &r_obj << std::endl;
+    std::cout << "Animal operator assignment called " <<std::endl;
     if(this != &r_obj)
         setType(r_obj.getType());
     return (*this);

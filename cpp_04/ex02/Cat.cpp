@@ -10,7 +10,7 @@ Cat::Cat(void)
 
 Cat::Cat(Cat const &r_obj)
 {
-    Animal::setType(r_obj.getType());
+    AAnimal::setType(r_obj.getType());
 }   
 
 Cat::~Cat(void)
@@ -27,7 +27,7 @@ Cat & Cat::operator=(Cat const &r_obj)
 {
     if(this != &r_obj)
     {
-        Animal::setType(r_obj.getType());
+        AAnimal::setType(r_obj.getType());
         if(_Brain)
         {
             delete _Brain;
@@ -49,10 +49,15 @@ Brain & Cat::getmyBrain(void) const
     return (*_Brain);
 }
 
-// void Cat::whatIsFistThingInMyHead(void) const
-// {
-//     std::cout << _Brain->getFirstIdea() <<std::endl;
-// }
+void Cat::getIdea(int idx) const
+{
+    std::cout << _Brain->getIdea(idx) <<std::endl;
+}
+
+void Cat::setIdea(int idx,std::string newIdea) const
+{
+    _Brain->setIdea(idx, newIdea);
+}
 // class Cat
 // {
 //     public:

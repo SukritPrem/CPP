@@ -1,7 +1,5 @@
 #include "Brain.hpp"
 // #include <random>
-// #include <ctime>
-
 Brain::Brain(void)
 {
         ideas[0] = "I love to run and play in the fields.";
@@ -106,25 +104,25 @@ Brain::Brain(void)
         // ideas[99] = "I have specialized adaptations for living in dense, underwater kelp forests.";
 }
 
-// Brain & Brain::operator=(Brain const &r_obj)
-// {
-//     if(this != &r_obj)
-//     {
-//         for (int i = 0; i < 5; ++i) {
-//                 ideas[i] = r_obj.getIdea();
-//         }
-//     }
-//     return (*this);
-// }
+Brain & Brain::operator=(Brain const &r_obj)
+{
+    if(this != &r_obj)
+    {
+        for (int i = 0; i < 5; ++i) {
+                ideas[i] = r_obj.getIdea();
+        }
+    }
+    return (*this);
+}
 
-// std::string Brain::getIdea(void) const
-// {
-//     std::srand(std::time(NULL));
+std::string Brain::getIdea(void) const
+{
+    std::srand(std::time(NULL));
 
-//     // Generate a random number between 0 and 99
-//     int randomNumber = std::rand() % 5;
-//     return (ideas[randomNumber]);
-// }
+    // Generate a random number between 0 and 99
+    int randomNumber = std::rand() % 5;
+    return (ideas[randomNumber]);
+}
 
 // std::string Brain::getFirstIdea(void) const
 // {

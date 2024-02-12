@@ -1,17 +1,17 @@
-#ifndef ANIMAL_H
-# define  ANIMAL_H
+#ifndef AANIMAL_H
+# define  AANIMAL_H
 
 #include <iostream>
 #include "Brain.hpp"
-class Animal
+class AAnimal
 {
     protected:
         std::string _type;
     public:
-        Animal(void);
-	    Animal(Animal const &r_obj);
-	    Animal & operator=(Animal const &r_obj);
-	    virtual ~Animal(void);
+        AAnimal(void);
+	    AAnimal(AAnimal const &r_obj);
+	    AAnimal & operator=(AAnimal const &r_obj);
+	    virtual ~AAnimal(void);
         
 
         void setType(std::string type);

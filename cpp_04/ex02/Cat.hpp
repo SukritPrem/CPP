@@ -1,9 +1,9 @@
 #ifndef CAT_H
 # define CAT_H
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include "Brain.hpp"
 
-class Cat : public Animal
+class Cat : public AAnimal
 {
     private:
         Brain   *_Brain;
@@ -13,9 +13,10 @@ class Cat : public Animal
 	    Cat & operator=(Cat const &r_obj);
 	    ~Cat(void);
 
-        // void whatIsFistThingInMyHead(void) const;
         void makeSound(void) const;
         Brain & getmyBrain(void) const;
+        void getIdea(int idx) const;
+        void setIdea(int idx,std::string newIdea) const;
 };
 
 #endif
