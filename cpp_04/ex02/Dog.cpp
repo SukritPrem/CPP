@@ -47,6 +47,15 @@ Brain & Dog::getmyBrain(void) const
     return (*_Brain);
 }
 
+void Dog::getIdea(int idx) const
+{
+    std::cout << _Brain->getIdea(idx) <<std::endl;
+}
+
+void Dog::setIdea(int idx,std::string newIdea) const
+{
+    _Brain->setIdea(idx, newIdea);
+}
 // void Dog::whatIsFistThingInMyHead(void) const
 // {
 //     std::cout << _Brain->getFirstIdea() <<std::endl;

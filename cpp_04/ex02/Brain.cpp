@@ -136,7 +136,7 @@ Brain::Brain(Brain const &r_obj)
 {
     if(this != &r_obj)
     {
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 100; ++i) {
                 ideas[i] = r_obj.ideas[i];
         }
     }

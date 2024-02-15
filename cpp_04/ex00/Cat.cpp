@@ -8,6 +8,7 @@ Cat::Cat(void)
 
 Cat::Cat(Cat const &r_obj)
 {
+    std::cout << "Copy constructor Cat called." << std::endl;
     Animal::setType(r_obj.getType());
 }   
 
@@ -18,6 +19,7 @@ Cat::~Cat(void)
 
 Cat & Cat::operator=(Cat const &r_obj)
 {
+    std::cout << "Cat assignment opertor called." << std::endl;
     if(this != &r_obj)
         Animal::setType(r_obj.getType());
     return (*this);

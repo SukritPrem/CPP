@@ -15,6 +15,8 @@ class Dog : public AAnimal
 	    ~Dog(void);
         void makeSound(void) const;
         Brain & getmyBrain(void) const;
+        void getIdea(int idx) const;
+        void setIdea(int idx,std::string newIdea) const;
         // virtual void whatIsFistThingInMyHead(void) const;
 };
 

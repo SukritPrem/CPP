@@ -11,7 +11,7 @@ class Animal
         Animal(void);
 	    Animal(Animal const &r_obj);
 	    Animal & operator=(Animal const &r_obj);
-	   ~Animal(void);
+	    virtual ~Animal(void);
         
 
         void setType(std::string type);

@@ -18,6 +18,8 @@ Animal::~Animal(void)
 
 Animal & Animal::operator=(Animal const &r_obj)
 {
+    std::cout << "Animal assignment operator called." << std::endl;
+
     if(this != &r_obj)
         setType(r_obj.getType());
     return (*this);
