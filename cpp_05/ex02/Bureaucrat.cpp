@@ -4,7 +4,7 @@
 
 Bureaucrat::Bureaucrat(void) : _name("Unknow"),_nameStr("Unknow"),_grade(150)
 {
-    std::cout << "Bureaucrat constructor void called" << std::endl;
+    // std::cout << "Bureaucrat constructor void called" << std::endl;
 }
 
 Bureaucrat & Bureaucrat::operator=(Bureaucrat &r_obj)
@@ -23,12 +23,12 @@ Bureaucrat::Bureaucrat(const char * name, int grade) : _name(name)
 
     checkStrNameIsNull(name);
     setGrade(checkGrade(grade));
-    std::cout << "Bureaucrat constructor name grade called" << std::endl;
+    // std::cout << "Bureaucrat constructor name grade called" << std::endl;
 }
 
 Bureaucrat::~Bureaucrat(void)
 {
-    std::cout << "Bureaucrat Deconstructor void called" << std::endl;
+    // std::cout << "Bureaucrat Deconstructor void called" << std::endl;
 }
 
 
@@ -82,10 +82,7 @@ void Bureaucrat::signForm(AForm &obj)
 
 void    Bureaucrat::executeForm(AForm const &form) 
 {
-
-    form.execute(*this);
-    
-    
+    form.execute(*this); 
 }
 void    Bureaucrat::decrement(int number)
 {

@@ -6,12 +6,12 @@ AForm::AForm(void):  _nameStr("UnknowName"),
                     _gradeSignein(0),
                     _gradeExecute(0)
 {
-    std::cout << "AForm Constructor void Called " << std::endl;
+    // std::cout << "AForm Constructor void Called " << std::endl;
 }
 
 AForm::~AForm(void)
 {
-    std::cout << "AForm Deconstructor Called " << std::endl;
+    // std::cout << "AForm Deconstructor Called " << std::endl;
 }
 
 AForm::AForm(AForm &r_obj) : _nameStr(r_obj.getName()),
@@ -55,6 +55,7 @@ AForm::AForm(const char *ptr,
         int gradeSignein,
         int gradeExecute) :
         _name(ptr),
+        _signed(false),
         _gradeSignein(gradeSignein),
         _gradeExecute(gradeExecute)
 {
@@ -71,7 +72,7 @@ AForm::AForm(const char *ptr,
     {
         throw GradeTooLowException();
     }
-    std::cout << "AForm Constructor name signed gradesignein gradeexecute Called " << std::endl;
+    // std::cout << "AForm Constructor name signed gradesignein gradeexecute Called " << std::endl;
 }
 
 std::string    AForm::getName(void) const{return _nameStr;}

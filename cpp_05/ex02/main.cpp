@@ -1,12 +1,12 @@
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
 
 int main(void)
 {
-    try
-    {
-        Bureaucrat B("john",10);// sucess created
+        // sucess created
         // Bureaucrat B_grade_negative("john",-1) ;// create not success grade is to hight
         // Bureaucrat B_grade_zero("john",0) ;//create not success grade is to hight
         // Bureaucrat B_grade_greade_to_low("john",151);//create not success
@@ -18,25 +18,61 @@ int main(void)
 
         //Test ShrubberyFrom
         //success sigin 145 execute 137
-        AForm *test = new Shrubberycreationform ("tree_file"); 
-        // File_one.beSigned(B); //B can signed. B is 10.
-        // File_one.execute(B); //B can execute. B is 10.
-        // B.signForm(File_one);
-        // B.executeForm(*test);
-        test->beSigned(B);
-        B.executeForm(*test);
-        // B.decrement(136); // B 
-        // File_one.beSigned(B); //B can't signed. B is 146.
-        // File_one.execute(B); //B can execute. B is 146.
 
-        //Test RobotomyRequestFrom
+        //this expect john can execute File_one
+        try
+        {
+            Bureaucrat B("john",10);
+            Shrubberycreationform File_one("File_one");
+            File_one.beSigned(B);
+            File_one.execute(B);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        
+        //this expect john can't execute because not signed
+        try
+        {
+            Bureaucrat B("john",10);
+            Shrubberycreationform File_one("File_one");
+            // std::cout << File_one.getSigned() << std::endl;
+            // std::cout << File_one.getTarget() << std::endl;
+            File_one.execute(B);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
 
-        // std::cout << File_one <<std::endl;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+        //Test PresidentialPardonForm
+        //success sigin 25 execute 5
+
+        //case not besigned
+        try
+        {
+            Bureaucrat B("john",10);
+            PresidentialPardonForm File_one("File_one");
+            File_one.execute(B);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+
+        //case signed already
+        try
+        {
+            Bureaucrat B("john",10);
+            PresidentialPardonForm File_one("File_one");
+            File_one.beSigned(B);
+            File_one.execute(B);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
     
     return (0);
 }

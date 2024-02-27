@@ -5,24 +5,23 @@
 Shrubberycreationform::Shrubberycreationform(void) : AForm("Shrubbery Form", 145, 137) , target("Unknow")
 {
     createFormTarget();
-    std::cout << "Shrubbery Constructor void Called" << std::endl;
+    // std::cout << "Shrubbery Constructor void Called" << std::endl;
 }
 
 Shrubberycreationform::~Shrubberycreationform(void)
 {
-    std::cout << "Shrubbery Deconstructor void Called" << std::endl;   
+    // std::cout << "Shrubbery Deconstructor void Called" << std::endl;   
 }
 Shrubberycreationform::Shrubberycreationform(const char *input) : AForm("Shrubbery Form", 145, 137)
 {
     if(input == NULL)
     {
         target = "Unknow";
-        std::cout << "Shrubbery Constructor input "" Called" << std::endl;
+        // std::cout << "Shrubbery Constructor input "" Called" << std::endl;
     }    
     else
     {
         target = input;
-        createFormTarget();
     }  
 }
 

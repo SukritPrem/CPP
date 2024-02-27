@@ -14,7 +14,7 @@ class PresidentialPardonForm : public AForm
         PresidentialPardonForm & operator=(PresidentialPardonForm &r_obj);
 
         std::string getTarget(void) const;
-        void     execute(Bureaucrat const & executor);
+        void    execute(Bureaucrat const & executor) const;
         class FailCreateForm : public std::exception
         {
             public:
