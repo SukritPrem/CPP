@@ -25,19 +25,20 @@ AForm::AForm(AForm &r_obj) : _nameStr(r_obj.getName()),
 
 void    AForm::beSigned(Bureaucrat &obj)
 {
-    try
-    {
-        if(obj.getGrade() > _gradeSignein && obj.getGrade() > _gradeExecute){
+
+        if(obj.getGrade() > _gradeSignein){
             throw GradeTooLowException();
         }
         else 
             _signed = true;
-    }
-    catch (const AForm::GradeTooLowException& e)
-    {
-        std::cerr << "Exception : " << e.what() << std::endl;
-    }
 }
+
+ bool       AForm::checkGradeExecutor(Bureaucrat const & executor) const
+ {
+    if(executor.getGrade() > _gradeExecute)
+        throw AForm::GradeTooLowException();
+    return true;
+ }
 
 std::ostream& operator<<(std::ostream &o, AForm &r_obj)
 {
@@ -62,11 +63,11 @@ AForm::AForm(const char *ptr,
     else
         _nameStr = _name;
 
-    if(gradeExecute < Bureaucrat::gradeMax || gradeSignein < Bureaucrat::gradeMax)
+    if(gradeExecute < GRADE_MAX|| gradeSignein < GRADE_MAX)
     {
         throw GradeTooHighException();
     }
-    else if(gradeExecute > Bureaucrat::gradeMin || gradeSignein > Bureaucrat::gradeMin)
+    else if(gradeExecute > GRADE_MIN || gradeSignein > GRADE_MIN)
     {
         throw GradeTooLowException();
     }

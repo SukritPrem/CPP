@@ -11,10 +11,10 @@ class RobotomyRequestform : public AForm
         RobotomyRequestform(void);
         RobotomyRequestform(const char * input);
         ~RobotomyRequestform(void);
-        // RobotomyRequestform & operator=(RobotomyRequestform &r_obj);
+        RobotomyRequestform & operator=(RobotomyRequestform &r_obj);
 
         std::string getTarget(void) const;
-        void     execute(Bureaucrat const & executor);
+        void     execute(Bureaucrat const & executor) const;
         class FailCreateForm : public std::exception
         {
             public:

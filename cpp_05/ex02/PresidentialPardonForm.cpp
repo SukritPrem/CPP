@@ -22,30 +22,29 @@ PresidentialPardonForm::PresidentialPardonForm(const char *input) : AForm("Presi
     }  
 }
 
+PresidentialPardonForm & PresidentialPardonForm::operator=(PresidentialPardonForm &r_obj)
+{
+    return *this;
+}
+
 std::string PresidentialPardonForm::getTarget(void) const
-{            // throw FailCreateForm();
+{
     return target;
 }
 
 void    PresidentialPardonForm::execute(Bureaucrat const & executor)
 {
-    try
-    {
-        if(executor.getGrade() > AForm::getGradeExecute())
-            throw AForm::GradeTooLowException();
-        else if(executor.getGrade() < 0)
-            throw AForm::GradeTooHighException();
-        else
-        {
-            AForm::setSigned(1);
-        }
-    }
-    catch (const AForm::GradeTooLowException& e)
-    {
-        std::cerr << "Exception : " << e.what() << std::endl;
-    }
-    catch (const AForm::GradeTooHighException& e)
-    {
-        std::cerr << "Exception : " << e.what() << std::endl;
-    }
+    if(!AForm::getSigned())
+        throw AForm::NotBeSigned();
+    if(AForm::checkGradeExecutor(executor))
+        AForm::setSigned(1);
+    else
+        throw AForm::NotBeSigned();
 }
+
+
+
+// A -> print A
+// B = A;
+// A 
+// B

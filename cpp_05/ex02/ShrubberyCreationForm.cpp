@@ -26,10 +26,17 @@ Shrubberycreationform::Shrubberycreationform(const char *input) : AForm("Shrubbe
     }  
 }
 
-void    Shrubberycreationform::createFormTarget(void)
+Shrubberycreationform & Shrubberycreationform::operator=(Shrubberycreationform &r_obj)
 {
-    target = target + "_shrubbery";
-    std::ofstream o(target.c_str(), std::ios::binary);
+    (void)r_obj;
+    return *this;
+}
+
+
+void    Shrubberycreationform::createFormTarget(void) const
+{
+    std::string newtarget = target + "_shrubbery";
+    std::ofstream o(newtarget.c_str(), std::ios::binary);
 
     if(!o.is_open())
     {
@@ -50,22 +57,16 @@ std::string Shrubberycreationform::getTarget(void) const
     return target;
 }
 
-void    Shrubberycreationform::execute(Bureaucrat const & executor)
+void    Shrubberycreationform::execute(Bureaucrat const & executor) const
 {
-    try
+    if(!this->getSigned())
     {
-        if(executor.getGrade() > AForm::getGradeExecute())
-            throw AForm::GradeTooLowException();
-        else if(executor.getGrade() < 0)
-            throw AForm::GradeTooHighException();
-        else
-        {
-            AForm::setSigned(1);
-        }
+        std::string meassage = " couldn't executed " + AForm::getName();
+        throw (std::runtime_error(executor.getName() + meassage));
     }
-    catch (const AForm::GradeTooLowException& e)
-    {
-        std::cerr << "Exception : " << e.what() << std::endl;
-    }
-
+    // std::cout << executor.getGrade() << " " << this->getGradeExecute() << std::cout;
+    if(executor.getGrade() > this->getGradeExecute())
+        throw AForm::GradeTooLowException();
+    std::cout << executor.getName() << " executed " << this->getName() << std::endl;
+    createFormTarget();
 }

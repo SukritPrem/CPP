@@ -2,24 +2,20 @@
 # define SHRUBBERYCREATIONFORM_H
 
 #include "AForm.hpp"
-//shrubberycreationform test;
-//test(target).creatForm;
-//CreateFile();
-//
+
 class Shrubberycreationform : public AForm
 {
     private:
         std::string     target;
+        void    createFormTarget(void) const;
     public:
         Shrubberycreationform(void);
         Shrubberycreationform(const char * input);
         ~Shrubberycreationform(void);
-        // Shrubberycreationform & operator=(Shrubberycreationform &r_obj);
+        Shrubberycreationform & operator=(Shrubberycreationform &r_obj);
 
-        void    createFormTarget(void);
-        // void    fixRangeSignExecute(int sign,int execute);
         std::string getTarget(void) const;
-        void     execute(Bureaucrat const & executor);
+        void    execute(Bureaucrat const & executor) const;
 };
 
 

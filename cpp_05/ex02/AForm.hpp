@@ -30,7 +30,11 @@ class AForm
         bool        getSigned(void) const;
         int   getGradeSignein(void) const;
         int   getGradeExecute(void) const;
-        virtual    void     execute(Bureaucrat const & executor) = 0;
+        bool       checkGradeExecutor(Bureaucrat const & executor) const;
+
+
+        virtual void   execute(Bureaucrat const & executor) const = 0;
+
         // virtual void    fixRangeSignExecute(int sign,int execute) = 0;
         class GradeTooHighException : public std::exception
         {
@@ -54,6 +58,14 @@ class AForm
                 const char * what(void) const throw()
                 {
                     return "string is null";
+                }
+        };
+        class NotBeSigned : public std::exception
+        {
+            public:
+                const char * what(void) const throw()
+                {
+                    return "Not Be signed";
                 }
         };
 };

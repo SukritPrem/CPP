@@ -6,52 +6,37 @@ int main(void)
 {
     try
     {
-        // AForm b("Student Doc", 1, 10);
-        // AForm d("test",1,2);
-        Shrubberycreationform test("Hello");
-        std::cout << test ;
-        // Form d(NULL, 150, 150);
-        // std::cout << b << std::endl;   
-        // std::cout << d << std::endl;
-        // std::cout << d;
-        Bureaucrat bob("bob", 150);
-        // test.execute(bob);
-        test.beSigned(bob);
-        bob.executeForm(test);
-        std::cout << test.getTarget() << std::endl;
-        // b.beSigned(bob);
-        // bob.signForm(b);
-        // bob.increment(10);
-        // std::cout << bob;
-        // b.beSigned(bob);
-        // bob.signForm(b);
-        // b.beSigned(bob);
-        // d.beSigned(bob);
-        // std::cout << d ;
+        Bureaucrat B("john",10);// sucess created
+        // Bureaucrat B_grade_negative("john",-1) ;// create not success grade is to hight
+        // Bureaucrat B_grade_zero("john",0) ;//create not success grade is to hight
+        // Bureaucrat B_grade_greade_to_low("john",151);//create not success
+
+        // B.increment(10); //grade is to hight;
+        // B.decrement(141); //grade is to low;
+        // B.increment(9); // OK;
+        // B.decrement(140); // OK:
+
+        //Test ShrubberyFrom
+        //success sigin 145 execute 137
+        AForm *test = new Shrubberycreationform ("tree_file"); 
+        // File_one.beSigned(B); //B can signed. B is 10.
+        // File_one.execute(B); //B can execute. B is 10.
+        // B.signForm(File_one);
+        // B.executeForm(*test);
+        test->beSigned(B);
+        B.executeForm(*test);
+        // B.decrement(136); // B 
+        // File_one.beSigned(B); //B can't signed. B is 146.
+        // File_one.execute(B); //B can execute. B is 146.
+
+        //Test RobotomyRequestFrom
+
+        // std::cout << File_one <<std::endl;
     }
-    catch (const Bureaucrat::GradeTooHighException& e)
+    catch(const std::exception& e)
     {
-        std::cerr << "Bureaucrat Exception : " << e.what() << std::endl;
+        std::cerr << e.what() << '\n';
     }
-    catch (const Bureaucrat::GradeTooLowException& e)
-    {
-        std::cerr << "Bureaucrat Exception : " << e.what() << std::endl;
-    }
-    catch (const Bureaucrat::StrNull& e)
-    {
-        std::cerr << "Bureaucrat Exception : " << e.what() << std::endl;
-    }
-    catch (const AForm::GradeTooHighException& e)
-    {
-        std::cerr << "Form Exception : " << e.what() << std::endl;
-    }
-    catch (const AForm::GradeTooLowException& e)
-    {
-        std::cerr << "Form Exception : " << e.what() << std::endl;
-    }
-    catch (const AForm::StrNull& e)
-    {
-        std::cerr << "Form Exception : " << e.what() << std::endl;
-    }
+    
     return (0);
 }

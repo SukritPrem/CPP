@@ -23,41 +23,31 @@ RobotomyRequestform::RobotomyRequestform(const char *input) : AForm("RobotomyReq
     else
     {
         target = input;
-        std::srand(std::time(NULL));
-        if(std::rand() % 2 == 0)
-            std::cout << target << " has been robotomized successfully." << std::endl;
-        else
-        {
-            std::cout << target << " has been robotomized fail." << std::endl;
-            // throw FailCreateForm();
-        }
     }  
 }
 
+RobotomyRequestform & RobotomyRequestform::operator=(RobotomyRequestform &r_obj)
+{
+    return *this;
+}
+
 std::string RobotomyRequestform::getTarget(void) const
-{            // throw FailCreateForm();
+{          
     return target;
 }
 
-void    RobotomyRequestform::execute(Bureaucrat const & executor)
+void    RobotomyRequestform::execute(Bureaucrat const & executor) const
 {
-    try
+    std::srand(std::time(NULL));
+    if(std::rand() % 2 == 0)
     {
-        if(executor.getGrade() > AForm::getGradeExecute())
-            throw AForm::GradeTooLowException();
-        else if(executor.getGrade() < 0)
-            throw AForm::GradeTooHighException();
-        else
-        {
-            AForm::setSigned(1);
-        }
-    }
-    catch (const AForm::GradeTooLowException& e)
+        if(!AForm::getSigned())
+            throw AForm::NotBeSigned();
+        std::cout << target << " has been robotomized successfully." << std::endl;
+    }    
+    else
     {
-        std::cerr << "Exception : " << e.what() << std::endl;
+        std::cout << target << " has been robotomized fail." << std::endl;
     }
-    catch (const AForm::GradeTooHighException& e)
-    {
-        std::cerr << "Exception : " << e.what() << std::endl;
-    }
+
 }
