@@ -46,8 +46,7 @@ std::ostream& operator<<(std::ostream &o, Form &r_obj)
     <<  "Grade Execute : " << r_obj.getGradeExecute() << std::endl;
     return o;
 }
-// Form & operator=(Form &r_obj);
-// Form(Form &r_obj);
+
 
 Form::Form(const char *ptr,
         int gradeSignein,
@@ -61,15 +60,11 @@ Form::Form(const char *ptr,
     else
         _nameStr = _name;
 
-    if(gradeExecute < Bureaucrat::gradeMax || gradeSignein < Bureaucrat::gradeMax)
-    {
+    if(gradeExecute < GRADE_MAX|| gradeSignein < GRADE_MAX)
         throw GradeTooHighException();
-    }
-    else if(gradeExecute > Bureaucrat::gradeMin || gradeSignein > Bureaucrat::gradeMin)
-    {
+    else if(gradeExecute > GRADE_MIN || gradeSignein > GRADE_MIN)
         throw GradeTooLowException();
-    }
-    std::cout << "Form Constructor name signed gradesignein gradeexecute Called " << std::endl;
+    // std::cout << "Form Constructor name signed gradesignein gradeexecute Called " << std::endl;
 }
 
 std::string    Form::getName(void){return _nameStr;}

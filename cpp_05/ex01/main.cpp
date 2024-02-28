@@ -4,46 +4,28 @@ int main(void)
 {
     try
     {
-        Form b("Student Doc", 1, 10);
-        Form d("test",1,2);
-        // Form d(NULL, 150, 150);
-        std::cout << b << std::endl;   
-        std::cout << d << std::endl;
-        std::cout << d;
-        Bureaucrat bob("bob", 19);
-        b.beSigned(bob);
-        bob.signForm(b);
-        bob.increment(10);
-        std::cout << bob;
-        b.beSigned(bob);
-        bob.signForm(b);
-        // b.beSigned(bob);
-        // d.beSigned(bob);
-        // std::cout << d ;
+        Bureaucrat  b1("Bureaucrat1", 1); 
+        Form        f1("Form1", 1, 1);
+        
+        f1.beSigned(b1);
+        std::cout << f1;
+        b1.signForm(f1);
     }
-    catch (const Bureaucrat::GradeTooHighException& e)
+    catch(const std::exception& e)
     {
-        std::cerr << "Bureaucrat Exception : " << e.what() << std::endl;
-    }
-    catch (const Bureaucrat::GradeTooLowException& e)
+        std::cerr << e.what() << '\n';
+    };
+
+    try
     {
-        std::cerr << "Bureaucrat Exception : " << e.what() << std::endl;
+        Bureaucrat  b1("Bureaucrat1", 1); 
+        Form        f1("Form1", 1, 1);
+
+        b1.signForm(f1);
     }
-    catch (const Bureaucrat::StrNull& e)
+    catch(const std::exception& e)
     {
-        std::cerr << "Bureaucrat Exception : " << e.what() << std::endl;
-    }
-    catch (const Form::GradeTooHighException& e)
-    {
-        std::cerr << "Form Exception : " << e.what() << std::endl;
-    }
-    catch (const Form::GradeTooLowException& e)
-    {
-        std::cerr << "Form Exception : " << e.what() << std::endl;
-    }
-    catch (const Form::StrNull& e)
-    {
-        std::cerr << "Form Exception : " << e.what() << std::endl;
-    }
+        std::cerr << e.what() << '\n';
+    };
     return (0);
 }

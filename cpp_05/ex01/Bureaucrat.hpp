@@ -4,29 +4,33 @@
 #include <iostream>
 class Form;
 #include "Form.hpp"
+#define GRADE_MAX 1
+#define GRADE_MIN 150
+
 class Bureaucrat
 {
     private:
         const char * _name;
         std::string  _nameStr;
         int     _grade;
+        void checkStrNameIsNull(const char *name);
+        int  checkGrade(int grade);
+        void    setGrade(int grade);
     public:
-        static int gradeMax;
-        static int gradeMin;
         Bureaucrat(void);
         ~Bureaucrat(void);
         Bureaucrat(const char * name,int grade);
         Bureaucrat(Bureaucrat &r_obj);
         Bureaucrat & operator=(Bureaucrat &r_obj);
 
-        void signForm(Form &obj);
+
         std::string const getName(void) const;
         int getGrade(void) const;
 
-        // void setName(std::string name);
-        // void    setGrade(int grade);
         void    increment(int number);
         void    decrement(int number);
+
+        void    signForm(Form &obj);
         class GradeTooHighException : public std::exception
         {
             public:
@@ -52,6 +56,5 @@ class Bureaucrat
                 }
         };
 };
-
 std::ostream& operator<<(std::ostream &o, Bureaucrat &r_obj);
 #endif
