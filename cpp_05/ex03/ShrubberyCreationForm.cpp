@@ -12,7 +12,6 @@ Shrubberycreationform::~Shrubberycreationform(void)
 {
     // std::cout << "Shrubbery Deconstructor void Called" << std::endl;   
 }
-
 Shrubberycreationform::Shrubberycreationform(const char *input) : AForm("Shrubbery Form", 145, 137)
 {
     if(input == NULL)
@@ -25,6 +24,7 @@ Shrubberycreationform::Shrubberycreationform(const char *input) : AForm("Shrubbe
         target = input;
     }  
 }
+
 Shrubberycreationform::Shrubberycreationform(std::string input) : AForm("Shrubbery Form", 145, 137)
 {
     target = input;

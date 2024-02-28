@@ -5,7 +5,7 @@
 #include <ctime>
 #include <cstdlib>
 
-RobotomyRequestform::RobotomyRequestform(void) : AForm("RobotomyRequestform Form", 72, 45) , target("Unknow")
+RobotomyRequestform::RobotomyRequestform(void) : AForm("RobotomyRequestForm", 72, 45) , target("Unknow")
 {
     // std::cout << "RobotomyRequestform Constructor void Called" << std::endl;
 }
@@ -14,7 +14,7 @@ RobotomyRequestform::~RobotomyRequestform(void)
 {
     // std::cout << "RobotomyRequestform Deconstructor void Called" << std::endl;   
 }
-RobotomyRequestform::RobotomyRequestform(const char *input) : AForm("RobotomyRequestform Form", 72, 45)
+RobotomyRequestform::RobotomyRequestform(const char *input) : AForm("RobotomyRequestForm", 72, 45)
 {
     if(input == NULL)
     {
@@ -27,6 +27,10 @@ RobotomyRequestform::RobotomyRequestform(const char *input) : AForm("RobotomyReq
     }  
 }
 
+RobotomyRequestform::RobotomyRequestform(std::string input) : AForm("RobotomyRequestForm", 72, 45)
+{
+        target = input;   
+}
 RobotomyRequestform & RobotomyRequestform::operator=(RobotomyRequestform &r_obj)
 {
     (void) r_obj;

@@ -1,6 +1,6 @@
 #include "PresidentialPardonForm.hpp"
 
-PresidentialPardonForm::PresidentialPardonForm(void) : AForm("PresidentialPardonForm Form", 25, 5) , target("Unknow")
+PresidentialPardonForm::PresidentialPardonForm(void) : AForm("PresidentialPardonForm", 25, 5) , target("Unknow")
 {
     // std::cout << "PresidentialPardonForm Constructor void Called" << std::endl;
 }
@@ -9,7 +9,7 @@ PresidentialPardonForm::~PresidentialPardonForm(void)
 {
     // std::cout << "PresidentialPardonForm Deconstructor void Called" << std::endl;   
 }
-PresidentialPardonForm::PresidentialPardonForm(const char *input) : AForm("PresidentialPardonForm Form", 25, 5)
+PresidentialPardonForm::PresidentialPardonForm(const char *input) : AForm("PresidentialPardonForm", 25, 5)
 {
     if(input == NULL)
     {
@@ -18,6 +18,11 @@ PresidentialPardonForm::PresidentialPardonForm(const char *input) : AForm("Presi
     }    
     else
         target = input;
+}
+
+PresidentialPardonForm::PresidentialPardonForm(std::string input) : AForm("PresidentialPardonForm", 25, 5)
+{
+    target = input;
 }
 
 PresidentialPardonForm & PresidentialPardonForm::operator=(PresidentialPardonForm &r_obj)

@@ -46,6 +46,34 @@ int main(void)
             std::cerr << e.what() << '\n';
         }
 
+        //Test RobotomyRequest
+        //success sigin 72 execute 45
+        
+        //case not besigned
+        try
+        {
+            Bureaucrat B("john",10);
+            RobotomyRequestform File_one("File_one");
+            File_one.execute(B);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+
+        //case signed already
+        try
+        {
+            Bureaucrat B("john",10);
+            RobotomyRequestform File_one("File_one");
+            File_one.beSigned(B);
+            File_one.execute(B);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+
         //Test PresidentialPardonForm
         //success sigin 25 execute 5
 
@@ -72,7 +100,7 @@ int main(void)
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
-        }
+        }    
     
     return (0);
 }
