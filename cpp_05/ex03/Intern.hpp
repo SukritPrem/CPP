@@ -9,8 +9,6 @@
 
 class Intern
 {
-    private:
-        std::string _nameForm[3];
     public:
         Intern(void);
         ~Intern(void);
@@ -18,13 +16,5 @@ class Intern
         Intern & operator=(Intern &r_obj);
 
         AForm *makeForm(std::string const &nameForm,std::string const &target);
-    class FailCreateForm : public std::exception
-    {
-        public:
-            const char * what(void) const throw()
-            {
-                return "Fail create form.";
-            }
-    };
 };
 #endif

@@ -10,6 +10,11 @@ Intern::~Intern(void)
     std::cout << "Intern Deconstructor void called" << std::endl;
 }
 
+Intern::Intern(Intern &r_obj)
+{
+    (void)r_obj;
+}
+
 Intern & Intern::operator=(Intern &r_obj)
 {
     (void)r_obj;
@@ -34,5 +39,5 @@ AForm * Intern::makeForm(std::string const &nameForm, std::string const &target)
         return (new RobotomyRequestform(target));
     }   
     else
-        throw FailCreateForm();
+        throw std::runtime_error("Error: Form not found" + nameForm);
 }
