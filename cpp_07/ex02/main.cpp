@@ -47,14 +47,37 @@ int main(void)
     {
         std::cerr << e.what() << '\n';
     }
-      try
+    try
     {
         std::cout << "--------------------" << std::endl;
-        std::cout << "Size array one default." <<std::endl;
+        std::cout << "Size array char one default." <<std::endl;
         Array<char> *charArray = new Array<char>();
         std::cout << (*charArray)[0] << std::endl;
         std::cout << "--------------------" << std::endl;
         (void)charArray;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    try
+    {
+        std::cout << "Size array -1 default." <<std::endl;
+        Array<int> intArray(-1);
+        std::cout << "--------------------" << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    try
+    {
+        std::cout << "--------------------" << std::endl;
+        std::cout << "Size array int one default." <<std::endl;
+        Array<int> *intArray = new Array<int>();
+        std::cout << (*intArray)[0] << std::endl;
+        std::cout << "--------------------" << std::endl;
+        (void)intArray;
     }
     catch(const std::exception& e)
     {

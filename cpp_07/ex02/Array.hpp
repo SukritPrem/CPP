@@ -3,6 +3,7 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 #include <iostream>
+#define MAX_SIZE 50
 template<typename T>
 class Array{
     private:
@@ -13,6 +14,9 @@ class Array{
         Array(size_t n) : _size(n){
             if(n == 0)
                 throw std::runtime_error("Size index not Zero.");
+            else if (n > MAX_SIZE) { // Check for -1 specifically
+                throw std::runtime_error("Invalid size.");
+            }
             elements = new T[_size];
             for(size_t i = 0 ; i < _size; i++)
             {
