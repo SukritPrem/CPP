@@ -2,29 +2,29 @@
 
 #ifndef ARRAY_H
 #define ARRAY_H
-
+#include <iostream>
 template<typename T>
 class Array{
     private:
         T* elements;
-        unsigned int size;
+        unsigned int _size;
     public:
-        Array(void);
-        ~Array(void);
-        Array(size_t n) : size(n){
-            elements = new T[size];
-            for(size_t i = 0 ; i < size; i++)
+        Array(void) : elements(new T()), _size(1) {}
+        Array(size_t n) : _size(n){
+            if(n == 0)
+                throw std::runtime_error("Size index not Zero.");
+            elements = new T[_size];
+            for(size_t i = 0 ; i < _size; i++)
             {
                 elements[i] = T();
             }
         }
-
         Array& operator=(const Array& other) {
         if (this != &other) {
             delete[] elements;
-            size_ = other.size_;
-            elements = new T[size_];
-            for (unsigned int i = 0; i < size_; ++i) {
+            _size = other._size;
+            elements = new T[_size];
+            for (unsigned int i = 0; i < _size; ++i) {
                 elements[i] = other.elements[i];
             }
         }
@@ -32,27 +32,22 @@ class Array{
         }
 
         unsigned int size() const {
-        return size_;
+        return _size;
         }
 
 
-        Array(const Array& other) : size(other.size) {
-            elements = new T[size];           
-            for (unsigned int i = 0; i < size; ++i) {
+        Array(const Array& other) : _size(other.size) {
+            elements = new T[_size];           
+            for (unsigned int i = 0; i < _size; ++i) {
                 elements[i] = other.elements[i];
             }
-        }
-        
-        
-        ~Array() {
-            delete[] elements;
         }
 
 
         T& operator[](unsigned int index) 
         {
-            if (index >= size_) {
-                throw std::out_of_range("Index out of bounds");
+            if (index >= _size) {
+                throw std::runtime_error("Index out of bounds");
             }
             return elements[index];
         }

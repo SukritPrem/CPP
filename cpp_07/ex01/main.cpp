@@ -3,7 +3,7 @@
 int main() {
     // Example usage
     int arr[] = {1, 2, 3, 4, 5};
-    iter<int, void(*)(int)>(arr, 5, printElement);
+    iter(arr, 5, print<const int>);
     std::string strArray[5];
 
     // Assign values to the elements of the array
@@ -14,7 +14,7 @@ int main() {
     strArray[4] = "!";
     std::cout << std::endl;
     
-    iter<std::string, void(*)(std::string)>(strArray, 5, printElement);
+    iter(strArray, 5, print<std::string>);
 
 
     return 0;
