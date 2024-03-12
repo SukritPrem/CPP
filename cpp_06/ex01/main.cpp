@@ -15,4 +15,5 @@ int main(void)
 
     std::cout << test1->name << std::endl;
 
+    delete test;
 }

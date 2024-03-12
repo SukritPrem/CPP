@@ -16,10 +16,7 @@ ScalarConverter::ScalarConverter(ScalarConverter const &src) {
 
 
 ScalarConverter &ScalarConverter::operator=(ScalarConverter const &src) {
-    if (this != &src)
-    {
-        // _input = src._input;
-    }
+    (void)src;
     return *this;
 }
 
@@ -40,7 +37,7 @@ std::string ScalarConverter::printChar(const std::string &input)
     iss >> d;
     
     if(toLower(input) == "nan" || toLower(input) == "-inf" 
-    || toLower(input) == "+inf"
+    || toLower(input) == "+inf" || toLower(input) == "inf"
         || d > static_cast<int>(CHAR_MAX)
         || d < static_cast<int>(CHAR_MIN)
     )
@@ -67,15 +64,15 @@ std::string ScalarConverter::printInt(const std::string &input)
     std::istringstream iss(input);
     std::ostringstream output;
     long double d;
-    iss >> d;
-
+    // std::cout<< "->" << toLower(input) <<std::endl;
     if(toLower(input) == "nan" || toLower(input) == "-inf" 
-    || toLower(input) == "+inf")
+    || toLower(input) == "+inf" || toLower(input) == "inf")
         output << "impossible";
     else
     {
         if(iss >> d)
         {
+
             if( d > static_cast<int>(INT_MAX) || d < static_cast<int>(INT_MIN))
             {
                 output << "impossible";
@@ -113,7 +110,7 @@ std::string ScalarConverter::printFloat(const std::string &input)
     } 
     else if(toLower(input) == "nan")
     {
-        output << "nan";
+        output << "nanf";
         return output.str();
     }     
     else
@@ -151,14 +148,8 @@ std::string ScalarConverter::printDouble(const std::string &input)
     std::istringstream iss(input);
     std::ostringstream output;
     long double d;
-    iss >> d;
-
-    if( d > (DBL_MAX) || d < -(DBL_MAX))
-    {
-        output << "impossible";
-        return output.str();
-    }    
-    else if(toLower(input) == "-inf" )
+    
+    if(toLower(input) == "-inf" )
     {
         output << "-inf";
         return output.str();

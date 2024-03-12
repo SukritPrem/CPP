@@ -3,9 +3,9 @@ NAME = a.out
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS =  main.cpp .cpp
+SRCS =  main.cpp Base.cpp CheckBaseClass.cpp
 
-HEADERS =  ScalarConverter.hpp
+HEADERS =  A.hpp B.hpp Base.hpp C.hpp
 
 OBJS = $(SRCS:.cpp=.o)
 
