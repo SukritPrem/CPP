@@ -15,10 +15,13 @@ public:
     Span(Span &r_obj);
     Span & operator=(Span &r_obj);
 
+    void    clear(void);
     Span(unsigned int N);
-    void addNumber(int num);
-    int shortestSpan(void);
-    int longestSpan(void);
+    int&    operator[](unsigned int n);
+    int     size(void) const;
+    void    addNumber(int num);
+    int     shortestSpan(void);
+    int     longestSpan(void);
 };
 
 #endif

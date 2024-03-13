@@ -10,6 +10,17 @@ int main ()
     vec.push_back(3);
     vec.push_back(4);
     vec.push_back(5);
-    bool result = easyfind(vec, 6);
-    std::cout << "Result :" << result << std::endl;
+
+    {
+        bool result = easyfind(vec, 6);
+        std::cout << "Result :" << result << std::endl;
+    }
+    {
+        bool result = easyfind(vec, 5);
+        std::cout << "Result :" << result << std::endl;
+    }
+    {
+        bool result = easyfind(vec, -1);
+        std::cout << "Result :" << result << std::endl;
+    }
 }
