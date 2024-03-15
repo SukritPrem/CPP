@@ -22,7 +22,7 @@ class ReadFile
         }
 
         bool customOpenFile(void){
-            std::cout << "test" << std::endl;
+            // std::cout << "test" << std::endl;
             file = new std::ifstream(_name.c_str());
 
             // Check if the file is opened successfully

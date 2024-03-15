@@ -7,6 +7,7 @@
 #include <sstream>
 #include "Storefourkey.hpp"
 #include <stdlib.h>
+#include <climits>
 
 class ReadFileInput : public ReadFile
 {
@@ -15,6 +16,20 @@ class ReadFileInput : public ReadFile
         std::map<int, Storefourkey> output;
         std::vector<std::string> formatHeader;
         std::map<std::string, int> checkValue;
+        bool isValueGreaterThanIntMax(long value) {
+            // std::cout << value << std::endl;
+            return static_cast<long>(value) > static_cast<long>(INT_MAX);
+        }
+        std::string toUpper(const std::string& str) {
+            std::string result = str;
+            for (size_t i = 0; i < result.length(); ++i) 
+            {
+                if (result[i] >= 'a' && result[i] <= 'z') {
+                    result[i] -= ('a' - 'A'); // Convert to uppercase
+                }
+            }
+            return result;
+        }
         void checkAlldigit(std::string &value,std::string string){
             for(size_t i = 0; i < value.length() ;i++)
             {
@@ -39,9 +54,9 @@ class ReadFileInput : public ReadFile
             }
             std::cout << check << std::endl;
             if(check != 3)
-                return("Bad format header");
+                return(toUpper("Bad format header"));
             else
-                return(info.getstatus());
+                return(toUpper("OK format header."));
         };
         void    checkFormatDate(std::string &word)
         {
@@ -52,7 +67,6 @@ class ReadFileInput : public ReadFile
             //word format 2011-12-09
             while(getline(groupDate, value, '-'))
             {
-                std::cout << count << std::endl;
                  if(value.length() == 4 && count == 0)
                 {
                     checkAlldigit(value,"ERROR YEAR MUST INT.");
@@ -62,30 +76,31 @@ class ReadFileInput : public ReadFile
                 if(value.length() == 2 && count == 1)
                 {
                     checkAlldigit(value,"ERROR MOUNTH MUST INT.");
+                    info.setmounth(value);
                     check++;
                 }   
                 if(value.length() == 2 && count == 2)
                 {
                     checkAlldigit(value,"ERROR DATE MUST INT.");
+                    info.setdate(value);
                     check++;
                 }    
                 count++;
             }
             if(check != 3)
                 info.setstatus("ERROR DATE.");
-            std::cout << info.getstatus() << std::endl;
         }
+
         void    countDotandNegative(std::string &word)
         {
             for (size_t i = 0; i < word.length(); ++i) 
             {
                     if (word[i] == '-') {
-                        checkValue["positionNegative"] = i;
-                        checkValue["CountDot"]++;
+                        checkValue["CountNegative"]++;
                     }
                     if (word[i] == '.') {
                         checkValue["positionDot"] = i;
-                        checkValue["CountNegative"]++;
+                        checkValue["CountDot"]++;
                     }
             }
         }
@@ -94,40 +109,56 @@ class ReadFileInput : public ReadFile
         {
             if(checkValue["CountDot"] > 1 && checkValue["CountNegative"] > 1)
                 info.setstatus("ERROR VALUE DOT AND NEGATIVE.");
-            else if(checkValue["CountNegative"] > 1 || checkValue["positionNegative"] > 0)
+            else if(checkValue["CountNegative"] > 0)
                 info.setstatus("ERROR VALUE NEGATIVE IT'S MUST POSITIVE.");
-            else if(checkValue["CountDot"] > 1)
+            else if(checkValue["CountDot"] > 0 && (checkValue["positionDot"] == 0 || \
+                checkValue["positionDot"] == static_cast<int>(word.length() - 1)))
                 info.setstatus("ERROR VALUE DOT.");
             else
             {
                 int i = 0;
-                if(checkValue["CountNegative"] == 1)
-                    i++;
                 for (; i < checkValue["positionDot"]; i++)
                 {
                     if(!isdigit(word[i]))
                         info.setstatus("ERROR VALUE MUST INT.");
                 }
-                int postDot = i;
+                int postDot = i++;
                 for (; static_cast<unsigned long>(i) < word.length() - postDot; i++)
                 {
                     if(!isdigit(word[i]))
                         info.setstatus("ERROR VALUE MUST INT.");
                 }
-
-                info.setstatus("OK");
+                if(info.getstatus() == "Unknow")
+                {
+                    std::stringstream ss(word);
+                    long long value;
+                    ss >> value;
+                    if(isValueGreaterThanIntMax(value))
+                        info.setstatus("ERROR SIZE MAX INT");
+                    else{
+                        info.setvalue(word);
+                        info.setstatus("OK VALUE.");
+                    }    
+                }  
             }
         }
         
+        void    resetCheckValue(void)
+        {
+            checkValue["CountNegative"] = 0;
+            checkValue["positionDot"] = 0;
+            checkValue["CountDot"] = 0;
+        }
+
         void    checkFormatValue(std::string &word)
         {
+            resetCheckValue();
             countDotandNegative(word);
             setStatusAfterCountDotandNegative(word);
-            if(info.getstatus() == "OK")
-            {
-                std::cout << info.getstatus() << std::endl;
-            }
-            std::cout << info.getstatus() << std::endl;
+            // if(info.getstatus() == "OK")
+            // {
+            //     std::cout << info.getstatus() << std::endl;
+            // }
         }
         void    checkFormatKeyValue(std::string &line)
         {
@@ -136,23 +167,29 @@ class ReadFileInput : public ReadFile
             int count = 0;
             while(getline(groupWord,word,' '))
             {
-                // std::cout << count << std::endl;
                 if(count == 0)
                 {
                     checkFormatDate(word);
+                    if(groupWord.eof())
+                        info.setstatus("Have Only Date");
                 }
                 else if(count == 1 && info.getstatus() == "Unknow")
                 {
                     if(word != "|")
                         info.setstatus("ERROR '|'");
+                    if(groupWord.eof())
+                        info.setstatus("Have Only Date and '|'");
                 }
                 else if(count == 2 && info.getstatus() == "Unknow")
                 {
                     checkFormatValue(word);
                 }
+                else if(count > 2)
+                    info.setstatus(toUpper("Have Many group word in line"));
                 count++;
             }
         }
+
     public:
         ReadFileInput(std::string name) : ReadFile(name){
             setfomatHeader();
@@ -182,15 +219,15 @@ class ReadFileInput : public ReadFile
             std::string line;
             int loop_count = 0;
             while (getline(ReadFile::getfile(), line)) {
-                std::cout << line << std::endl;
+                // std::cout << line << std::endl;
                 // check header format (date | value)
                 if(loop_count == 0)
                     info.setstatus(checkFormatHeader(line));
                 else
                     checkFormatKeyValue(line);
-
-                if(loop_count == 2)
-                    break;
+                std::cout << info.getstatus() << std::endl;
+                // if(loop_count == 2)
+                //     break;
                 loop_count++;
                 output[loop_count] = info;
                 info.setstatus("Unknow");
