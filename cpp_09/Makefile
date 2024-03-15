@@ -3,9 +3,9 @@ NAME = a.out
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS =  main.cpp readFileToVector.cpp
+SRCS =  main.cpp readFile.cpp 
 
-HEADERS =  readFileToVector.hpp
+HEADERS =  readFile.hpp readFileInput.hpp Storefourkey.hpp
 
 OBJS = $(SRCS:.cpp=.o)
 

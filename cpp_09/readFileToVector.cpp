@@ -4,33 +4,9 @@
 #include <string>
 #include <sstream>
 #include <map>
-
-class Storefourkey
-{
-    private:
-        std::string status;
-        std::string year;
-        std::string mounth;
-        std::string date;
-        std::string value;
-    public:
-        Storefourkey(void);
-
-        void setstatus(std::string status){
-            this->status = status;
-        };
-
-        std::string getstatus(void){
-            return status;
-        };
-        void setyear(std::string year){
-            this->year = year;
-        };
-        std::string getyear(void){
-            return year;
-        };
-};
-
+#include <cstring>
+#include <cstdlib>
+#include "Storefourkey.hpp"
 void adv_tokenizer(std::string s, char del)
 {
     std::stringstream ss(s);
@@ -46,6 +22,44 @@ bool isNumber(const std::string& str) {
     std::istringstream iss(str);
     double num;
     return iss >> num && iss.eof();  // Check if entire string was converted and no extra characters
+}
+
+long convertGroupWordDate(std::string date_str)
+{
+
+    // Create tm structure to hold date components
+    tm timeinfo;
+    std::cout << date_str << std::endl;
+    // Split the date string using a hyphen as a delimiter
+    char *token = strtok(const_cast<char *>(date_str.c_str()), "-");
+
+    // Extract year, month, and day individually
+    int year = atoi(token);
+    token = strtok(NULL, "-");
+    int month = atoi(token) - 1;  // Adjust for 0-based indexing
+    token = strtok(NULL, "-");
+    int day = atoi(token);
+
+    timeinfo.tm_year = year - 1900;  // Adjust for tm_year starting from 1900
+    timeinfo.tm_mon = month;
+    timeinfo.tm_mday = day;
+    timeinfo.tm_hour = 0;  // Set default hour, minute, and second to 0
+    timeinfo.tm_min = 0;
+    timeinfo.tm_sec = 0;
+    timeinfo.tm_isdst = -1;  // Let mktime determine DST
+
+    // Convert to timestamp
+    time_t timestamp = mktime(&timeinfo);
+
+    // Check for conversion error
+    if (timestamp == -1) {
+        std::cerr << "Error converting date to timestamp." << std::endl;
+        return 1;
+    }
+
+    // Print the timestamp
+    std::cout << "Timestamp: " << timestamp << std::endl;
+    return timestamp;
 }
 
 int main() {
@@ -108,7 +122,7 @@ int main() {
     formatHeader.push_back("value");
     // Define a vector to store each row of the CSV file
     std::vector<std::vector<std::string> > data;
-    std::map<int, std::map<std::string, std::string>> data_output;
+    std::map<int, std::map<std::string, std::string> > data_output;
     std::string line;
     int loop_count = 0;
     // Read each line of the file
@@ -139,8 +153,7 @@ int main() {
         {
             std::vector<std::string> afterSplit;
             int countRow = 0;
-            int checkRow = 0;
-            int count = 0;
+            // int checkRow = 0;
             std::string groupWord;
             // int check_raw = 0;
 
@@ -157,20 +170,37 @@ int main() {
                     std::string key1;
                     int check = 0;
                     std::stringstream groupDate(groupWord);
-
+                    int count = 0;
                     while(getline(groupDate,key1, '-'))
                     {
                         if(key1.length() == 4 && count == 0)
                         {
+                            for(int i = 0; i < key1.length() ;i++)
+                            {
+                                if(!isdigit(key1[i]))
+                                    line_output.setstatus("ERROR YEAR MUST INT.");
+                            }
                             line_output.setyear(key1);
                             check++;
                         }
                         if(key1.length() == 2 && count == 1)
                         {
+                            for(int i = 0; i < key1.length() ;i++)
+                            {
+                                if(!isdigit(key1[i]))
+                                    line_output.setstatus("ERROR MOUTH MUST INT.");
+                            }
                             check++;
                         }    
                         if(key1.length() == 2 && count == 2)
+                        {
+                            for(int i = 0; i < key1.length() ;i++)
+                            {
+                                if(!isdigit(key1[i]))
+                                    line_output.setstatus("ERROR DATE MUST INT.");
+                            }
                             check++;
+                        }    
                         count++;
                     }
                     if(check != 3)
@@ -212,14 +242,14 @@ int main() {
                         line_output.setstatus("ERROR VALUE DOT.");
                     else
                     {
-                        size_t i = 0;
+                        int i = 0;
                         for (; i < map["positionDot"]; i++)
                         {
                             if(!isdigit(groupValue[i]))
                                 line_output.setstatus("ERROR VALUE MUST INT.");
                         }
-                        
-                        for (; i < groupValue.length() - i; i++)
+                        int postDot = i;
+                        for (; static_cast<unsigned long>(i) < groupValue.length() - postDot; i++)
                         {
                             if(!isdigit(groupValue[i]))
                                 line_output.setstatus("ERROR VALUE MUST INT.");
