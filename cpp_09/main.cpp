@@ -1,11 +1,12 @@
 
 
 #include "readFileInput.hpp"
+#include "readFileData.hpp"
 
 int main(void)
 {
-    ReadFileInput data("input.txt");
-    
-    data.readFileContents();
-    data.convertfileInputToMap();
+    ReadFileInput dataInput("input.txt");
+    ReadFiledata dataCsv("data.csv");
+    dataInput.readFileContents();
+    dataInput.convertfileInputToMap();
 }

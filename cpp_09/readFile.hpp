@@ -1,6 +1,12 @@
 #ifndef READFILE_H
 # define READFILE_H
-
+#include "readFile.hpp"
+#include <map>
+#include <vector>
+#include <sstream>
+#include "Storefourkey.hpp"
+#include <stdlib.h>
+#include <climits>
 #include <fstream>
 #include <iostream>
 
@@ -38,6 +44,7 @@ class ReadFile
             {
                 file->close();
             }
+            delete file;
         }
         virtual void   readFileContents(void) = 0;
 };

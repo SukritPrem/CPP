@@ -12,6 +12,7 @@ class Storefourkey
         std::string mounth;
         std::string date;
         std::string value;
+        std::string formattDate;
     public:
         Storefourkey(void) {
             setstatus("Unknow");
@@ -52,6 +53,11 @@ class Storefourkey
 
         std::string getValue(void){
             return value;
+        }
+
+        std::string getFormattDate(void)
+        {
+            return year + "-" + mounth + "-" + date;
         }
 };
 
