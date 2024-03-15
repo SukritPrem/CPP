@@ -52,6 +52,7 @@ class ReadFileInput : public ReadFile
             //word format 2011-12-09
             while(getline(groupDate, value, '-'))
             {
+                std::cout << count << std::endl;
                  if(value.length() == 4 && count == 0)
                 {
                     checkAlldigit(value,"ERROR YEAR MUST INT.");
@@ -72,6 +73,7 @@ class ReadFileInput : public ReadFile
             }
             if(check != 3)
                 info.setstatus("ERROR DATE.");
+            std::cout << info.getstatus() << std::endl;
         }
         void    countDotandNegative(std::string &word)
         {
@@ -92,14 +94,14 @@ class ReadFileInput : public ReadFile
         {
             if(checkValue["CountDot"] > 1 && checkValue["CountNegative"] > 1)
                 info.setstatus("ERROR VALUE DOT AND NEGATIVE.");
-            else if(checkValue["CountNegative"] > 1 || checkValue["positionNegative"] >= 0)
+            else if(checkValue["CountNegative"] > 1 || checkValue["positionNegative"] > 0)
                 info.setstatus("ERROR VALUE NEGATIVE IT'S MUST POSITIVE.");
             else if(checkValue["CountDot"] > 1)
                 info.setstatus("ERROR VALUE DOT.");
             else
             {
                 int i = 0;
-                if(checkValue["positionNegative"] == 0)
+                if(checkValue["CountNegative"] == 1)
                     i++;
                 for (; i < checkValue["positionDot"]; i++)
                 {
@@ -123,8 +125,9 @@ class ReadFileInput : public ReadFile
             setStatusAfterCountDotandNegative(word);
             if(info.getstatus() == "OK")
             {
-
+                std::cout << info.getstatus() << std::endl;
             }
+            std::cout << info.getstatus() << std::endl;
         }
         void    checkFormatKeyValue(std::string &line)
         {
@@ -133,6 +136,7 @@ class ReadFileInput : public ReadFile
             int count = 0;
             while(getline(groupWord,word,' '))
             {
+                // std::cout << count << std::endl;
                 if(count == 0)
                 {
                     checkFormatDate(word);
@@ -153,7 +157,8 @@ class ReadFileInput : public ReadFile
         ReadFileInput(std::string name) : ReadFile(name){
             setfomatHeader();
             setCheckValue();
-        };
+        }
+
         void    setCheckValue(void)
         {
             checkValue["CountNegative"] = 0;
@@ -168,7 +173,7 @@ class ReadFileInput : public ReadFile
 
         void   readFileContents(void){
             if(!ReadFile::customOpenFile())
-                throw std::runtime_error("Can't Open file data");
+                throw std::runtime_error("Can't Open file input");
         }
 
 
@@ -177,18 +182,18 @@ class ReadFileInput : public ReadFile
             std::string line;
             int loop_count = 0;
             while (getline(ReadFile::getfile(), line)) {
-
-                //check header format (date | value)
+                std::cout << line << std::endl;
+                // check header format (date | value)
                 if(loop_count == 0)
                     info.setstatus(checkFormatHeader(line));
                 else
                     checkFormatKeyValue(line);
 
-                if(loop_count == 1)
+                if(loop_count == 2)
                     break;
                 loop_count++;
-
                 output[loop_count] = info;
+                info.setstatus("Unknow");
             }
             return output;
         }

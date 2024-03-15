@@ -4,5 +4,8 @@
 
 int main(void)
 {
-    ReadFileInput("input.txt");
+    ReadFileInput data("input.txt");
+    
+    data.readFileContents();
+    data.convertfileInputToMap();
 }

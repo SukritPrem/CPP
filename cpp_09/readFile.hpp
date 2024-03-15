@@ -7,13 +7,14 @@
 class ReadFile
 {
     private:
-        std::string name;
+        std::string _name;
         std::ifstream *file;
     public:
         ReadFile(void){};
         ReadFile(std::string &name){setNamefile(name);};
         void setNamefile(std::string &name){
-            this->name = name;
+                        // std::cout << "test" << std::endl;
+            _name = name;
         }
 
         std::ifstream& getfile(void){
@@ -21,8 +22,8 @@ class ReadFile
         }
 
         bool customOpenFile(void){
-
-            file = new std::ifstream(this->name.c_str());
+            std::cout << "test" << std::endl;
+            file = new std::ifstream(_name.c_str());
 
             // Check if the file is opened successfully
             if (!file->is_open()) {
