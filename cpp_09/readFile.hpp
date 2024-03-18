@@ -39,10 +39,13 @@ class ReadFile
             return true;
         };
 
-        ~ReadFile() {
-            if (file->is_open()) 
+        virtual ~ReadFile() {
+            if(file)
             {
-                file->close();
+                if (file->is_open()) 
+                {
+                    file->close();
+                }
             }
             delete file;
         }

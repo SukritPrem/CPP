@@ -1,51 +1,62 @@
 #ifndef  READFILEDATA_H
 # define READFILEDATA_H
 
-#include "readFile.hpp"
+#include "readFileInput.hpp"
 
-class ReadFiledata : public ReadFile
+class ReadFileData : public ReadFileInput
 {
     private:
         std::map<int, Storefourkey> output;
     public:
-        ReadFiledata(std::string name) : ReadFile(name){}
-    
+        ReadFileData(std::string name) : ReadFileInput(name, ","){
+            setfomatHeader();
+        }
+        ~ReadFileData(void){
+            // std::cout << "Bye Bye" << std::endl;
+        };
+
         void   readFileContents(void){
             if(!ReadFile::customOpenFile())
                 throw std::runtime_error("Can't Open file input");
         }
-        
-        std::map<int, Storefourkey> convertfileInputToMap(void)
+
+        void    setfomatHeader(void)
+        {
+            //need becase class readFileData inheritance from readfileinput
+            formatHeader.clear();
+            formatHeader.push_back("date");
+            formatHeader.push_back(",");
+            formatHeader.push_back("exchange_rate");
+        }     
+
+        std::string addSpacesAfterComma(std::string input) {
+            std::string output = input;
+            size_t pos = output.find(',');
+            while (pos != std::string::npos) {
+                output.insert(pos, " ");
+                output.insert(pos + 2, " ");
+                pos = output.find(',', pos + 2);
+            }
+            return output;
+        }
+
+
+        std::map<int, Storefourkey> convertfileDataToMap(void)
         {
             std::string line;
             int loop_count = 0;
-            // Read each line of the file
-            while (getline(ReadFile::getfile(), line))
+
+            while (getline(ReadFile::getfile(), line)) 
             {
-                std::stringstream groupWord(line);
-                Storefourkey info;
-                std::string value;
-                int count = 0;
-                int countOr = 0;
-                // Split the line into tokens based on comma delimiter
-                while (getline(groupWord, value, ',')) {
-                    std::stringstream groupDate(value);
-                    while(getline(groupDate, value, '-') && count == 0)
-                    {
-                        if(value.length() == 4 && count == 0)
-                            info.setyear(value);
-                        else if(value.length() == 2 && count == 1)
-                            info.setmounth(value);
-                        else if(value.length() == 2 && count == 2)
-                            info.setdate(value);
-                            // group
-                        count++;
-                    }
-                    if(count == 1)
-                        info.setvalue(value);
-                    countOr++;
-                }
+                // std::cout << "-->" << addSpacesAfterComma(line) << std::endl;
+                if(loop_count == 0)
+                    ReadFileInput::info.setstatus(checkFormatHeader(addSpacesAfterComma(line)));
+                else
+                    checkFormatKeyValue(addSpacesAfterComma(line));
+                std::cout << info.getstatus() << std::endl;
+                loop_count++;
                 output[loop_count] = info;
+                info.setstatus("Unknow");
             }
             return output;
         }

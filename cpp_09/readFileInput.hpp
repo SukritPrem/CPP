@@ -11,11 +11,67 @@
 
 class ReadFileInput : public ReadFile
 {
-    private:
+    protected:
+        std::string separate;
         Storefourkey info;
-        std::map<int, Storefourkey> output;
         std::vector<std::string> formatHeader;
         std::map<std::string, int> checkValue;
+        virtual std::string checkFormatHeader(std::string line){
+            std::cout << *(formatHeader.begin() + 1) << std::endl;
+            std::stringstream row(line);
+            std::string value;
+            int count = 0;
+            int check = 0;
+            while (getline(row, value, ' ')){
+                if(value == *(formatHeader.begin() + count) && count == 0)
+                    check++;
+                if(value == *(formatHeader.begin() + count) && count == 1)
+                    check++;
+                if(value == *(formatHeader.begin() + count) && count == 2)
+                    check++;
+                count++;
+            }
+            std::cout << check << std::endl;
+            if(check != 3)
+                return(toUpper("Bad format header"));
+            else
+                return(toUpper("OK format header."));
+        };
+
+        void    checkFormatKeyValue(std::string line)
+        {
+            std::stringstream groupWord(line);
+            std::string word;
+            int count = 0;
+            while(groupWord >> word)
+            {
+                if(count == 0)
+                {
+                    checkFormatDate(word);
+                    if(groupWord.eof())
+                        info.setstatus("Have Only Date");
+                }
+                else if(count == 1 && info.getstatus() == "Unknow")
+                {
+                    if(word != getSeparate())
+                        info.setstatus("ERROR " + getSeparate());
+                    if(groupWord.eof())
+                        info.setstatus("Have Only Date and " + getSeparate());
+                }
+                else if(count == 2 && info.getstatus() == "Unknow")
+                {
+                    checkFormatValue(word);
+                    break;
+                }
+                count++;
+            }
+            if(!groupWord.eof())
+                info.setstatus(toUpper("Have Many group word in line"));
+        }
+
+
+    private:
+        std::map<int, Storefourkey> output;
         bool isValueGreaterThanIntMax(long value) {
             // std::cout << value << std::endl;
             return static_cast<long>(value) > static_cast<long>(INT_MAX);
@@ -36,27 +92,6 @@ class ReadFileInput : public ReadFile
                 if(!isdigit(value[i]))
                     info.setstatus(string);
             }
-        };
-        std::string checkFormatHeader(std::string &line){
-            std::stringstream row(line);
-            std::string value;
-            int count = 0;
-            int check = 0;
-            while (getline(row, value, ' ')){
-
-                if(value == *(formatHeader.begin() + count) && count == 0)
-                    check++;
-                if(value == *(formatHeader.begin() + count) && count == 1)
-                    check++;
-                if(value == *(formatHeader.begin() + count) && count == 2)
-                    check++;
-                count++;
-            }
-            std::cout << check << std::endl;
-            if(check != 3)
-                return(toUpper("Bad format header"));
-            else
-                return(toUpper("OK format header."));
         };
         void    checkFormatDate(std::string &word)
         {
@@ -160,38 +195,15 @@ class ReadFileInput : public ReadFile
             //     std::cout << info.getstatus() << std::endl;
             // }
         }
-        void    checkFormatKeyValue(std::string &line)
-        {
-            std::stringstream groupWord(line);
-            std::string word;
-            int count = 0;
-            while(getline(groupWord,word,' '))
-            {
-                if(count == 0)
-                {
-                    checkFormatDate(word);
-                    if(groupWord.eof())
-                        info.setstatus("Have Only Date");
-                }
-                else if(count == 1 && info.getstatus() == "Unknow")
-                {
-                    if(word != "|")
-                        info.setstatus("ERROR '|'");
-                    if(groupWord.eof())
-                        info.setstatus("Have Only Date and '|'");
-                }
-                else if(count == 2 && info.getstatus() == "Unknow")
-                {
-                    checkFormatValue(word);
-                }
-                else if(count > 2)
-                    info.setstatus(toUpper("Have Many group word in line"));
-                count++;
-            }
-        }
+
 
     public:
-        ReadFileInput(std::string name) : ReadFile(name){
+        ReadFileInput(void){};
+        ~ReadFileInput(void){
+            // std::cout << "Bye by ReadFile" << std::endl;
+        };
+        ReadFileInput(std::string name, std::string separate) : ReadFile(name){
+            setSeparate(separate);
             setfomatHeader();
             setCheckValue();
         }
@@ -201,7 +213,13 @@ class ReadFileInput : public ReadFile
             checkValue["CountNegative"] = 0;
             checkValue["CountDot"] = 0;
         }
-        void    setfomatHeader(void)
+        void    setSeparate(std::string separate)
+        {
+            this->separate = separate;
+        }
+        std::string &getSeparate(void){return separate;};
+
+        virtual void    setfomatHeader(void)
         {
             formatHeader.push_back("date");
             formatHeader.push_back("|");

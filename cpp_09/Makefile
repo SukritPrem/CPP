@@ -5,7 +5,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRCS =  main.cpp readFile.cpp 
 
-HEADERS =  readFile.hpp readFileInput.hpp Storefourkey.hpp
+HEADERS =  readFile.hpp readFileInput.hpp Storefourkey.hpp readFileData.hpp
 
 OBJS = $(SRCS:.cpp=.o)
 
