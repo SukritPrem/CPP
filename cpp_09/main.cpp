@@ -17,7 +17,7 @@ int main(void)
     // test->testread();
     // (void)test;
     // (void)test1;
-     ReadFileInput dataInput("input.txt", "|");
-    dataInput.readFileContents();
-    dataInput.convertfileInputToMap();
+    //  ReadFileInput dataInput("input.txt", "|");
+    // dataInput.readFileContents();
+    // dataInput.convertfileInputToMap();
 }
