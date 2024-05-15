@@ -2,32 +2,25 @@
 #include <map>
 #include <ctime>
 
+
 int main() {
-    // Create a map with std::time_t keys and values of type std::pair<std::time_t, double>
-    std::map<std::time_t, std::pair<std::time_t, double>> myMap;
+    std::map<int, int> myMap;
 
-    // Insert some example data into the map
-    myMap[1625072045] = 
-    myMap[1625072145] = 
-    myMap[1625072245] = std::make_pair(1625072245, 30.5);
+    // Example timestamps
+    int t1 = 0; // current time
+    int t2 = 1;            // current time + 100 seconds
+    int t3 = 2;            // current time + 200 seconds
 
-    // Define a key for which we want to find the lower bound
-    std::time_t key = 1625072100; // Adjust this timestamp to your needs
+    // Insert elements into the map
+    myMap[t1] =10;
+    myMap[t2] =20;
+    myMap[t3] =30;
+    // Define a time for which we want to find the lower bound
 
-    // Find the lower bound for the key
-    auto it = myMap.lower_bound(key);
-    auto it1 = myMap.upper_bound(key);
-    std::cout << "it1: " << it1->second.first << std::endl;
-    // Check if the iterator is valid and print the result
-    if (it != myMap.end()) {
-        std::time_t foundKey = it->first;
-        std::time_t valueTime = it->second.first;
-        double valueDouble = it->second.second;
-        std::cout << "Lower bound found at key: " << foundKey << std::endl;
-        std::cout << "Associated value: (" << valueTime << ", " << valueDouble << ")" << std::endl;
-    } else {
-        std::cout << "No lower bound found for the given key." << std::endl;
-    }
-
+    // Find the lower bound
+    std::map<int, int>::iterator  it = myMap.lower_bound(2);
+    std::map<int, int>::iterator  it2 = myMap.upper_bound(2);
+    std::cout << "Lower bound of 10 is " << it->first << " " << it->second << std::endl;
+    std::cout << "Upper bound of 10 is " << it2->first << " " << it2->second << std::endl;
     return 0;
 }
