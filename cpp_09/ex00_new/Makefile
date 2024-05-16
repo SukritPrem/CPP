@@ -25,4 +25,10 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test:
+	cmake -S . -B build
+	cmake --build build
+	cd build && ctest
+
+
+.PHONY: all clean fclean re test

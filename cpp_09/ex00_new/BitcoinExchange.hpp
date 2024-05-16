@@ -9,20 +9,20 @@
 #include <ctime>
 #include <algorithm>
 #include <vector>
+#include <algorithm>
+#include <cctype>
 class BitcoinExchange {
      private:
         std::string _name;
         std::stringstream buffer;
         std::map<std::time_t, double> _exchangeRate;
-        
-        std::map<std::time_t, std::pair<double, std::string> > _data;
     public:
         BitcoinExchange(void){};
+        ~BitcoinExchange(void){};
         BitcoinExchange(std::string name, std::string fileExchangeRate)
         {
             copyDataToExchangeRate(fileExchangeRate);
             std::ifstream file(name.c_str()); // Open the file
-
             if (!file.is_open()) {
                 std::cerr << "Error opening the file!" << std::endl;
             }
@@ -46,7 +46,6 @@ class BitcoinExchange {
             std::istringstream ss(line);
             // int i = 0;
             std::getline(ss, line, c);
-            // std::cout << line << std::endl;
             if(line != "date")
                 throw std::invalid_argument("Invalid file format");
             std::getline(ss, line, c);
@@ -69,7 +68,7 @@ class BitcoinExchange {
             return tokens;
         }
 
-        bool checkItallIsNumber(std::vector<std::string> &parts)
+        bool checkItallDateIsNumber(std::vector<std::string> &parts)
         {
             int i = 0;
             int j = 0;
@@ -107,8 +106,11 @@ class BitcoinExchange {
             std::vector<std::string> parts = split(date, '-');
             if(parts.size() != 3)
                 return false;
-            if(checkItallIsNumber(parts) == false)
+            if(checkItallDateIsNumber(parts) == false)
                 return false;
+            std::vector<std::string>::iterator year = parts.begin();
+            std::vector<std::string>::iterator month = parts.begin() + 1;
+            std::vector<std::string>::iterator day = parts.begin() + 2;
             return true;
         }
 
@@ -120,6 +122,16 @@ class BitcoinExchange {
                 return false;
             return true;
         }
+
+        bool containsAlphabet(const std::string& str) {
+            for (std::string::const_iterator it = str.begin(); it != str.end(); ++it) {
+                if (std::isalpha(*it)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         void checkBySplitExchanges(std::ifstream &file)
         {
             std::string line;
@@ -134,7 +146,6 @@ class BitcoinExchange {
                 std::string clone = line;
                 while(ss >> line)
                     parts.push_back(line);
-
                 if(parts.size() != 3)
                 {
                     std::cout << "Error: Bad input => " << clone << std::endl;
@@ -145,11 +156,16 @@ class BitcoinExchange {
                 date = parts[0];
                 symbol = parts[1];
                 exchange_rate = parts[2];
+                if(containsAlphabet(exchange_rate))
+                {
+                    std::cout << "Error: Bad input => " << clone << std::endl;
+                    parts.clear();
+                    continue;
+                }
 
                 double f;
                 sscanf(exchange_rate.c_str(), "%lf", &f);
                 removeSpaces(date);
-
 
                 if(!checkFormatdate(date))
                 {
@@ -180,31 +196,11 @@ class BitcoinExchange {
                 
                 _itUp--;
 
-                // debug
-                // char buffer[80];
-                // std::tm *tm = std::localtime(&_itUp->first);
-                // std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", tm);
-                // std::cout << "Formatted Date and Time: " << buffer << std::endl;
-
                 std::cout << date << " => " << f * _itUp->second << std::endl;
 
                 parts.clear();
             }
-            // for (std::map<std::time_t, double>::const_iterator it = _data["data"].begin(); it != _data["data"].end(); ++it) {
-            //     printf("%ld %f\n", it->first, it->second * 2);
-            // }
         }
-
-        // void calculate()
-        // {
-        //    for(std::map<std::time_t, double>::iterator it = _exchangeRate.begin(); it != _exchangeRate.end(); ++it)
-        //    {
-        //        for(std::map<std::time_t, std::pair<double, std::string> >::iterator it2 = _data.begin(); it2 != _data.end(); ++it2)
-        //        {
-        //             std::cout << it->first << " " << it2->first << std::endl;
-        //        }
-        //    }
-        // }
 
         bool containsSpace(const std::string& str) {
             // Check if the string contains a space
@@ -228,14 +224,10 @@ class BitcoinExchange {
                 std::istringstream ss(line);
                 std::getline(ss, date, ',');
                 std::getline(ss, rate, ',');
-                // std::cout << date << " " << rate << std::eneedl;
                 double f;
                 sscanf(rate.c_str(), "%lf", &f);
                 _exchangeRate.insert(std::pair<std::time_t, double>(stringToTimestamp(date), f));
             }
-            // for (std::map<std::time_t, double>::const_iterator it = _exchangeRate.begin(); it != _exchangeRate.end(); ++it) {
-            //     printf("%ld %f\n", it->first, it->second * 2);
-            // }
 
         }
 };
