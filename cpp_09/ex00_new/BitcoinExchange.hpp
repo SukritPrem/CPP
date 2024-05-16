@@ -13,7 +13,7 @@ class BitcoinExchange {
      private:
         std::string _name;
         std::stringstream buffer;
-        std::map<std::time_t, std::pair<std::time_t, double> > _exchangeRate;
+        std::map<std::time_t, double> _exchangeRate;
         
         std::map<std::time_t, std::pair<double, std::string> > _data;
     public:
@@ -71,12 +71,33 @@ class BitcoinExchange {
 
         bool checkItallIsNumber(std::vector<std::string> &parts)
         {
+            int i = 0;
+            int j = 0;
             for (std::vector<std::string>::iterator it = parts.begin(); it != parts.end(); ++it) {
+
                 for(std::string::iterator it2 = it->begin(); it2 != it->end(); ++it2)
                 {
                     if(!isdigit(*it2))
                         return false;
+                    j++;
                 }
+                if(i == 0)
+                {
+                    if(j != 4)
+                        return false;
+                }
+                else if(i == 1)
+                {
+                    if(j != 2)
+                        return false;
+                }
+                else if(i == 2)
+                {
+                    if(j != 2)
+                        return false;
+                }
+                i++;
+                j = 0;
             }
             return true;
         }
@@ -116,8 +137,8 @@ class BitcoinExchange {
 
                 if(parts.size() != 3)
                 {
-
-                    // _data.insert()
+                    std::cout << "Error: Bad input => " << clone << std::endl;
+                    parts.clear();
                     continue;
                 }
 
@@ -129,41 +150,45 @@ class BitcoinExchange {
                 sscanf(exchange_rate.c_str(), "%lf", &f);
                 removeSpaces(date);
 
-                
+
                 if(!checkFormatdate(date))
                 {
                     std::cout << "Error: Bad input => " << clone << std::endl;
+                    parts.clear();
                     continue;
                 }   
                 if(!checkSymbol(symbol))
                 {
                     std::cout << "Error: Bad input => " << clone << std::endl;
+                    parts.clear();
                     continue;
                 }
                 if(f < 0)
                 {
                     std::cout << "Error: not a positive number." << std::endl;
+                    parts.clear();
                     continue;
                 }
                 if(f > static_cast<int>(INT_MAX))
                 {
                     std::cout << "Error: too large a number." << std::endl;
+                    parts.clear();
                     continue;
                 }
                 
-                std::map<std::time_t, std::pair<std::time_t, double> >::const_iterator _itLow = _exchangeRate.lower_bound(stringToTimestamp(date));
-                std::map<std::time_t, std::pair<std::time_t, double> >::const_iterator _itUp = _exchangeRate.upper_bound(stringToTimestamp(date));
+                std::map<std::time_t , double>::const_iterator _itUp = _exchangeRate.upper_bound(stringToTimestamp(date));
+                
+                _itUp--;
 
-                char buffer[100];
-                std::tm *tm = std::localtime(&_itLow->first);
-                std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", tm);
-                std::cout << "Formatted Date and Time: " << buffer << std::endl;
+                // debug
+                // char buffer[80];
+                // std::tm *tm = std::localtime(&_itUp->first);
+                // std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", tm);
+                // std::cout << "Formatted Date and Time: " << buffer << std::endl;
 
-                tm = std::localtime(&_itUp->first);
-                std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", tm);
-                std::cout << "Formatted Date and Time: " << buffer << std::endl;
+                std::cout << date << " => " << f * _itUp->second << std::endl;
 
-                break;
+                parts.clear();
             }
             // for (std::map<std::time_t, double>::const_iterator it = _data["data"].begin(); it != _data["data"].end(); ++it) {
             //     printf("%ld %f\n", it->first, it->second * 2);
@@ -206,7 +231,7 @@ class BitcoinExchange {
                 // std::cout << date << " " << rate << std::eneedl;
                 double f;
                 sscanf(rate.c_str(), "%lf", &f);
-                _exchangeRate.insert(std::pair<std::time_t, std::pair<std::time_t, double> >(stringToTimestamp(date), std::pair<std::time_t, double>(stringToTimestamp(date), f)));
+                _exchangeRate.insert(std::pair<std::time_t, double>(stringToTimestamp(date), f));
             }
             // for (std::map<std::time_t, double>::const_iterator it = _exchangeRate.begin(); it != _exchangeRate.end(); ++it) {
             //     printf("%ld %f\n", it->first, it->second * 2);
