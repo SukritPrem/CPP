@@ -98,9 +98,53 @@ class BitcoinExchange {
                 i++;
                 j = 0;
             }
+
             return true;
         }
 
+        bool checkMonth(std::string &month)
+        {
+            int i = 0;
+            sscanf(month.c_str(), "%d", &i);
+            if(i < 1 || i > 12)
+                return false;
+            return true;
+        }
+
+        bool isLeapYear(int year) {
+            if (year % 4 != 0) return false;
+            if (year % 100 != 0) return true;
+            if (year % 400 != 0) return false;
+            return true;
+        }
+
+        // Function to get the number of days in a given month of a given year
+        int getDaysInMonth(int year, int month) {
+            switch (month) {
+                case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                    return 31;
+                case 4: case 6: case 9: case 11:
+                    return 30;
+                case 2:
+                    return isLeapYear(year) ? 29 : 28;
+                default:
+                    return 0; // Invalid month
+            }
+        }
+
+
+        bool checkDay(std::string &day, std::string &month, std::string &year)
+        {
+            int d = 0;
+            int m = 0;
+            sscanf(month.c_str(), "%d", &m);
+            sscanf(day.c_str(), "%d", &d);
+            int max_day = getDaysInMonth(atoi(year.c_str()), m);
+            if(d < 1 || d > max_day)
+                return false;
+            return true;
+        }
+        
         bool checkFormatdate(std::string &date)
         {
             std::vector<std::string> parts = split(date, '-');
@@ -111,6 +155,10 @@ class BitcoinExchange {
             std::vector<std::string>::iterator year = parts.begin();
             std::vector<std::string>::iterator month = parts.begin() + 1;
             std::vector<std::string>::iterator day = parts.begin() + 2;
+            if(checkMonth(*month) == false)
+                return false;
+            if(checkDay(*day, *month, *year) == false)
+                return false;
             return true;
         }
 

@@ -11,5 +11,5 @@ int main(int argc, char **argv)
     // }
     // BitcoinExchange(argv[1],"data.csv");
     // BitcoinExchange("data1.csv","data.csv"); //for testing purposes
-    BitcoinExchange("./test/errorDate.csv","data.csv"); //for testing purposes
+    BitcoinExchange("./test/data1.csv","data.csv"); //for testing purposes
 }

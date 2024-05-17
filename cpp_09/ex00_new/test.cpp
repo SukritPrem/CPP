@@ -47,3 +47,37 @@ TEST(testing, CaseHaveAlphaInDateYear) {
 
     EXPECT_EQ(capturedOutput, expect);
 }
+
+TEST(ERROR, CaseHaveAlphaInDateMonth) {
+    std::ostringstream oss;
+    
+    std::streambuf* oldbuf = std::cout.rdbuf();
+
+    std::cout.rdbuf(oss.rdbuf());
+
+    BitcoinExchange exchange("../test/errorDateMonth.csv","../data.csv");
+    std::cout.rdbuf(oldbuf);
+
+    std::string capturedOutput = oss.str();  
+    
+    std::string expect = "Error: Bad input => 2011-0A-03 | 3\n";
+
+    EXPECT_EQ(capturedOutput, expect);
+}
+
+TEST(ERROR, CaseHaveAlphaInDateDay) {
+    std::ostringstream oss;
+    
+    std::streambuf* oldbuf = std::cout.rdbuf();
+
+    std::cout.rdbuf(oss.rdbuf());
+
+    BitcoinExchange exchange("../test/errorDateDay.csv","../data.csv");
+    std::cout.rdbuf(oldbuf);
+
+    std::string capturedOutput = oss.str();  
+    
+    std::string expect = "Error: Bad input => 2011-01-0A | 5\nError: Bad input => 2011-01-32 | 5\nError: Bad input => 2024-02-30 | 5\nError: Bad input => 2023-02-29 | 5\nError: Bad input => 2023-04-31 | 5\nError: Bad input => 2023-04-31  5 |\nError: Bad input => 2023-04-31 , 5\n";
+
+    EXPECT_EQ(capturedOutput, expect);
+}
