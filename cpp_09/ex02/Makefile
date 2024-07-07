@@ -10,6 +10,7 @@ HEADERS = PmergeMe.hpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
+	./PmergeMe
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
