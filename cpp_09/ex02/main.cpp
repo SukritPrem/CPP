@@ -3,7 +3,7 @@
 #include <iostream>
 #include "PmergeMe.hpp"
 #include <vector>
-#include <list>
+#include <deque>
 #include <utility>
 #include <string>
 
@@ -13,7 +13,7 @@ int main(int argc,char **argv)
     (void)argv;
     std::string mocArgv[100] = {"9", "8", "2", "1", "3", "5", "4", "10", "12","6"};
     std::vector<int> vec;
-    std::list<int> list;
+    std::deque<int> list;
     // int mockArgc = 100;
     int count = 0;
     while (mocArgv[count] != "") {
@@ -27,10 +27,10 @@ int main(int argc,char **argv)
         list.push_back(std::atoi(mocArgv[i].c_str()));
     }
 
-    PmergeMe<std::vector<int>, std::vector<std::pair<int,int> > > test;
+    // PmergeMe<std::vector<int>, std::vector<std::pair<int,int> > > test;
 
-    // PmergeMe<std::list<int>,std::list<int>::iterator> test2;
-    test.setData(vec);
+    PmergeMe<std::deque<int>, std::deque<std::pair<int,int> > > test;
+    test.setData(list);
     test.insertContainerToContainerPair();
     test.sortContainerInsidePair();
     // test.printContainerPair();

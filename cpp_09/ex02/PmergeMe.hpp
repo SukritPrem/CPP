@@ -2,6 +2,7 @@
 #define PMERGEME_HPP
 #include <algorithm>
 #include <vector>
+#include <list>
 #include <iostream>
 #include <string>
 #include <stdio.h>
@@ -24,12 +25,12 @@ class PmergeMe
         void insertContainerToContainerPair(){
             // Iterator it;
             std::pair<int, int> pairValue;
-            typename Container::const_iterator it;
-            // std::cout << _container.size() << std::endl;
+            typename Container::iterator it;
+            std::cout << _container.size() << std::endl;
             if(_container.size() % 2 == 1)
                 _haveOdd = true;
 
-            for(it = _container.begin(); it < _container.end(); it++){
+            for(it = _container.begin(); it != _container.end(); it++){
                 pairValue.first = *it;
                 if(it++ + 1 == _container.end())
                 {
