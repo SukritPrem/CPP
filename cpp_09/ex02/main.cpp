@@ -52,50 +52,59 @@ int main(int argc,char **argv)
     //     vec.push_back(std::atoi(mocArgv[i].c_str()));
     //     deque.push_back(std::atoi(mocArgv[i].c_str()));
     // }
+
     PmergeMe<std::vector<int>, std::vector<std::pair<int,int> > > test2;
 
     PmergeMe<std::deque<int>, std::deque<std::pair<int,int> > > test;
     
-    test.setData(deque);
-    std::clock_t start = std::clock();
-    test.insertContainerToContainerPair();
-    test.sortContainerInsidePair();
-    // test.printContainerPair();
+    // test.setData(deque);
+    // std::clock_t start = std::clock();
+    // test.insertContainerToContainerPair();
+    // test.sortContainerInsidePair();
+    // // test.printContainerPair();
+    // // std::cout << "-----------------------------" << std::endl;
+    // test.mergeSortContainerPair();
+    // test.clearContainer();
+    // test.insertContainerPairToContainer();
+    // test.printContainer();
     // std::cout << "-----------------------------" << std::endl;
-    test.mergeSortContainerPair();
-    // test.printContainerPair();
+    // test.binarySearchContainer();
+    // std::clock_t end = std::clock();
+    // std::cout << 1000.0 * (end - start) / CLOCKS_PER_SEC << std::endl;
     // std::cout << "-----------------------------" << std::endl;
-    test.clearContainer();
-    test.insertContainerPairToContainer();
-    test.printContainer();
-    std::cout << "-----------------------------" << std::endl;
-    test.binarySearchContainer();
-    std::clock_t end = std::clock();
-    std::cout << 1000.0 * (end - start) / CLOCKS_PER_SEC << std::endl;
-    std::cout << "-----------------------------" << std::endl;
-    test.printContainer();
-    std::cout << "-----------------------------" << std::endl;
-    // test2.setData(list);
-    std::cout << "--------------test2---------------" << std::endl;
-    test2.setData(vec);
-    start = std::clock();
-    test2.insertContainerToContainerPair();
-    test2.sortContainerInsidePair();
-    // test.printContainerPair();
+    // test.printContainer();
     // std::cout << "-----------------------------" << std::endl;
-    test2.mergeSortContainerPair();
-    // test.printContainerPair();
+    // // test2.setData(list);
+    // std::cout << "--------------test2---------------" << std::endl;
+    // test2.setData(vec);
+    // start = std::clock();
+    // test2.insertContainerToContainerPair();
+    // test2.sortContainerInsidePair();
+    // // test.printContainerPair();
+    // // std::cout << "-----------------------------" << std::endl;
+    // test2.mergeSortContainerPair();
+    // // test.printContainerPair();
+    // // std::cout << "-----------------------------" << std::endl;
+    // test2.clearContainer();
+    // test2.insertContainerPairToContainer();
+    // test2.printContainer();
     // std::cout << "-----------------------------" << std::endl;
-    test2.clearContainer();
-    test2.insertContainerPairToContainer();
-    test2.printContainer();
-    std::cout << "-----------------------------" << std::endl;
-    test2.binarySearchContainer();
-    end = std::clock();
-    std::cout << 1000.0 * (end - start) / CLOCKS_PER_SEC << std::endl;
-    std::cout << "-----------------------------" << std::endl;
-    test2.printContainer();
-    std::cout << "-----------------------------" << std::endl;
+    // test2.binarySearchContainer();
+    // end = std::clock();
+    // std::cout << 1000.0 * (end - start) / CLOCKS_PER_SEC << std::endl;
+    // std::cout << "-----------------------------" << std::endl;
+    // test2.printContainer();
+    // std::cout << "-----------------------------" << std::endl;
+
+    PmergeMe<std::vector<int>, std::vector<std::pair<int,int> > > pmergeMeVector;
+
+    PmergeMe<std::deque<int>, std::deque<std::pair<int,int> > > pmergeMeDeque;
+
+    pmergeMeVector.setData(vec);
+    pmergeMeVector.printBeforeSort();
+    pmergeMeVector.run(true);
+    pmergeMeDeque.setData(deque);
+    pmergeMeDeque.run(false);
     // test.sortContainer();
     // test.printOutput();
 }

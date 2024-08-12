@@ -5,6 +5,7 @@
 #include <list>
 #include <iostream>
 #include <string>
+#include <ctime>
 #include <stdio.h>
 template<typename Container, typename ContainPair>
 class PmergeMe
@@ -18,6 +19,7 @@ class PmergeMe
         PmergeMe(){
             _haveOdd = false;
         };
+
         void setData(Container &data){
             _container = data;
         }
@@ -26,7 +28,7 @@ class PmergeMe
             // Iterator it;
             std::pair<int, int> pairValue;
             typename Container::iterator it;
-            std::cout << _container.size() << std::endl;
+            // std::cout << _container.size() << std::endl;
             if(_container.size() % 2 == 1)
                 _haveOdd = true;
 
@@ -53,14 +55,6 @@ class PmergeMe
             }
         }
 
-        void printContainer(){
-            typename Container::iterator it = _container.begin();
-            while(it != _container.end())
-            {
-                std::cout << *it << std::endl;
-                it++;
-            }   
-        }
 
         void sortContainerInsidePair(){
             typename ContainPair::iterator it = _containerPair.begin();
@@ -162,6 +156,40 @@ class PmergeMe
             }
         }
 
+        void printBeforeSort(){
+            std::cout << "Before:  ";
+            printContainer();
+        }
+
+        void printContainer(){
+            typename Container::iterator it = _container.begin();
+            while(it != _container.end())
+            {
+                std::cout << *it << " " ;
+                it++;
+            }
+            std::cout << std::endl;
+        }
+
+        void printAfterSort(){
+            std::cout << "After:   ";
+            printContainer();
+        }
+        void run(bool print){
+            std::clock_t start = std::clock();
+            insertContainerToContainerPair();
+            sortContainerInsidePair();
+            mergeSortContainerPair();
+            clearContainer();
+            insertContainerPairToContainer();
+            binarySearchContainer();
+            std::clock_t end = std::clock();
+            if(print)
+                printAfterSort();
+            std::cout << "Time to process a range of "<< _container.size() <<" elements with std::[..] : ";
+            std::cout << 1000.0 * (end - start) / CLOCKS_PER_SEC  << " ms"<< std::endl;
+
+        }
         ~PmergeMe(){
 
         };
