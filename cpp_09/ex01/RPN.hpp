@@ -2,10 +2,18 @@
 #include <stack>
 #include <string>
 #include <iostream>
+#include <stdlib.h>
+
+struct answer
+{
+    bool    print;
+    int number;
+};
 
 class RPN
 {
     private:
+        answer      output;
         std::stack<double> stack;
     public:
         RPN(){};
@@ -20,9 +28,9 @@ class RPN
             return value;
         };
 
-        double evaluate(std::string expression){
+        answer evaluate(std::string expression){
 
-            for (int i = 0; i < expression.length(); i++){
+            for (unsigned long i = 0; i < expression.length(); i++){
                 if (expression[i] == ' '){
                     continue;
                 }
@@ -33,7 +41,7 @@ class RPN
                         i++;
                     }
                     i--;
-                    push(std::stod(number));
+                    push(atoi(number.c_str()));
                 }
                 else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/'){
                     double a = pop();
@@ -54,10 +62,12 @@ class RPN
                 else
                 {
                     std::cout << "Error" << std::endl;
-                    return 0;
+                    output.print = false;
+                    return output;
                 }
             }
-
-            return pop();
+            output.print = true;
+            output.number = pop();
+            return output;
         };
 };
