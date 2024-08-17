@@ -16,7 +16,7 @@ int main(int argc,char **argv)
 
     int i = 0;
     std::vector<int> vec;
-    std::deque<int> deque;
+    std::deque<int> deq;
     for(i = 1; i < argc; i++)
     {
         std::string arg = argv[i];
@@ -33,7 +33,7 @@ int main(int argc,char **argv)
 			throw (std::invalid_argument("Wrong Argument found overflow"));
 		}
         vec.push_back(n);
-        deque.push_back(n);
+        deq.push_back(n);
     }
     // std::string mocArgv[argc] = argv;
     // return 0;
@@ -53,9 +53,9 @@ int main(int argc,char **argv)
     //     deque.push_back(std::atoi(mocArgv[i].c_str()));
     // }
 
-    PmergeMe<std::vector<int>, std::vector<std::pair<int,int> > > test2;
+    // PmergeMe<std::vector<int>, std::vector<std::pair<int,int> > > test2;
 
-    PmergeMe<std::deque<int>, std::deque<std::pair<int,int> > > test;
+    // PmergeMe<std::deque<int>, std::deque<std::pair<int,int> > > test;
     
     // test.setData(deque);
     // std::clock_t start = std::clock();
@@ -96,15 +96,15 @@ int main(int argc,char **argv)
     // test2.printContainer();
     // std::cout << "-----------------------------" << std::endl;
 
-    PmergeMe<std::vector<int>, std::vector<std::pair<int,int> > > pmergeMeVector;
+    PmergeMe<std::vector<int>,std::vector<std::pair<int,int> >, int> pmergeMeVector;
 
-    PmergeMe<std::deque<int>, std::deque<std::pair<int,int> > > pmergeMeDeque;
+    // PmergeMe<std::deque<int>, std::deque<std::pair<int,int> > > pmergeMeDeque;
 
-    pmergeMeVector.setData(vec);
-    pmergeMeVector.printBeforeSort();
-    pmergeMeVector.run(true);
-    pmergeMeDeque.setData(deque);
-    pmergeMeDeque.run(false);
+    // pmergeMeVector.setData(vec);
+    // pmergeMeVector.printBeforeSort();
+    // pmergeMeVector.run(true, "vector");
+    // pmergeMeDeque.setData(deque);
+    // pmergeMeDeque.run(false, "deque");
     // test.sortContainer();
     // test.printOutput();
 }

@@ -3,7 +3,7 @@ NAME = PmergeMe
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRCS = main.cpp PmergeMe.cpp 
+SRCS = main.cpp 
 
 HEADERS = PmergeMe.hpp
 
