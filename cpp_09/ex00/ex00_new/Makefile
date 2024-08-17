@@ -1,16 +1,16 @@
-NAME = a.out
+NAME = btc
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS =  main.cpp 
+SRCS =  main.cpp BitcoinExchange.cpp
 
 HEADERS =  BitcoinExchange.hpp
 
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
-	./a.out
+	./btc ./test/data1.csv
 
 $(OBJS): $(HEADERS)
 
