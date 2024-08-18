@@ -13,6 +13,20 @@ BitcoinExchange::BitcoinExchange(std::string name, std::string fileExchangeRate)
     checkBySplitExchanges(file);
 };
 
+BitcoinExchange::BitcoinExchange(BitcoinExchange const &rhs){
+    *this = rhs;
+}
+
+BitcoinExchange & BitcoinExchange::operator=(BitcoinExchange const &rhs){
+    
+    if(this != &rhs){
+        _exchangeRate = rhs._exchangeRate;
+        _name = rhs._name;
+        buffer.str(rhs.buffer.str());
+    }
+    return (*this);
+}
+
 time_t BitcoinExchange::stringToTimestamp(const std::string& dateString) {
     std::tm tm = {};
     strptime(dateString.c_str(), "%Y-%m-%d", &tm);

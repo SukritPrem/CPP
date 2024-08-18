@@ -20,6 +20,11 @@ class BitcoinExchange {
         ~BitcoinExchange(void);
         BitcoinExchange(std::string name, std::string fileExchangeRate);
 
+        BitcoinExchange(BitcoinExchange const &rhs);
+
+        BitcoinExchange & operator=(BitcoinExchange const &rhs);
+
+
         time_t stringToTimestamp(const std::string& dateString);
 
         void checkBySplitFirstLine(char c, std::ifstream &file);
