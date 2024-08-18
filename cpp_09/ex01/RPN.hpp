@@ -18,6 +18,8 @@ class RPN
     public:
         RPN();
         ~RPN();
+        RPN(RPN const &rhs);
+        RPN & operator=(RPN const &rhs);
         void push(double value);
         double pop();
         answer evaluate(std::string expression);

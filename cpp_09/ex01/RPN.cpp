@@ -14,6 +14,18 @@ double RPN::pop(){
     return value;
 };
 
+RPN::RPN(RPN const &rhs){
+    *this = rhs;
+}
+RPN & RPN::operator=(RPN const &rhs){
+	if (this != &rhs) {
+		output = rhs.output;
+        stack = rhs.stack;
+	}
+	return (*this);
+}
+
+
 answer RPN::evaluate(std::string expression){
 
     for (unsigned long i = 0; i < expression.length(); i++){
