@@ -96,15 +96,17 @@ int main(int argc,char **argv)
     // test2.printContainer();
     // std::cout << "-----------------------------" << std::endl;
 
-    PmergeMe<std::vector<int>,std::vector<std::pair<int,int> >, int> pmergeMeVector;
+    PmergeMe<std::vector<int>,std::vector<std::pair<int,int> > > pmergeMeVector;
 
-    // PmergeMe<std::deque<int>, std::deque<std::pair<int,int> > > pmergeMeDeque;
+    PmergeMe<std::deque<int>, std::deque<std::pair<int,int> > > pmergeMeDeque;
 
-    // pmergeMeVector.setData(vec);
-    // pmergeMeVector.printBeforeSort();
-    // pmergeMeVector.run(true, "vector");
-    // pmergeMeDeque.setData(deque);
-    // pmergeMeDeque.run(false, "deque");
+    pmergeMeVector.setData(vec);
+    pmergeMeVector.printBeforeSort();
+    pmergeMeVector.run(true, "vector");
+    pmergeMeDeque.setData(deq);
+    pmergeMeDeque.run(false, "deque");
+
+
     // test.sortContainer();
     // test.printOutput();
 }
