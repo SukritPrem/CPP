@@ -11,7 +11,7 @@ BitcoinExchange::BitcoinExchange(std::string name, std::string fileExchangeRate)
     if (!file.is_open()) {
         std::cerr << "Error opening the file!" << std::endl;
     }
-    checkBySplitFirstLine(',', file);
+    checkBySplitFirstLine('|', file);
     checkBySplitExchanges(file);
     file.close();
 };
@@ -39,15 +39,19 @@ time_t BitcoinExchange::stringToTimestamp(const std::string& dateString) {
 
 void BitcoinExchange::checkBySplitFirstLine(char c, std::ifstream &file)
 {
+    (void)c;
     std::string line;
     std::getline(file, line);
     std::istringstream ss(line);
     // int i = 0;
-    std::getline(ss, line, c);
+    ss >> line;
     if(line != "date")
         throw std::invalid_argument("Invalid file format");
-    std::getline(ss, line, c);
-    if(line != "exchange_rate")
+    ss >> line;
+    if(line != "|")
+        throw std::invalid_argument("Invalid file format");
+    ss >> line;
+    if(line != "value")
         throw std::invalid_argument("Invalid file format"); 
 }
 
