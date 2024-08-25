@@ -8,9 +8,11 @@
 #include <sstream>
 #include <ctime>
 #include <algorithm>
-#include <vector>
+#include <list>
 #include <algorithm>
 #include <cctype>
+#include <vector>
+
 class BitcoinExchange {
      private:
         std::string _name;
@@ -29,8 +31,8 @@ class BitcoinExchange {
 
         void checkBySplitFirstLine(char c, std::ifstream &file);
 
-        std::vector<std::string> split(const std::string& s, char delimiter);
-        bool checkItallDateIsNumber(std::vector<std::string> &parts);
+        std::list<std::string> split(const std::string& s, char delimiter);
+        bool checkItallDateIsNumber(std::list<std::string> &parts);
 
         bool checkMonth(std::string &month);
 

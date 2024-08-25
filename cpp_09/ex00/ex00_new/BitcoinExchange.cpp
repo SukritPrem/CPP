@@ -55,8 +55,9 @@ void BitcoinExchange::checkBySplitFirstLine(char c, std::ifstream &file)
         throw std::invalid_argument("Invalid file format"); 
 }
 
-std::vector<std::string> BitcoinExchange::split(const std::string& s, char delimiter) {
-    std::vector<std::string> tokens;
+#include <list>
+std::list<std::string> BitcoinExchange::split(const std::string& s, char delimiter) {
+    std::list<std::string> tokens;
     size_t start = 0;
     size_t end = s.find(delimiter);
 
@@ -70,11 +71,11 @@ std::vector<std::string> BitcoinExchange::split(const std::string& s, char delim
     return tokens;
 }
 
-bool BitcoinExchange::checkItallDateIsNumber(std::vector<std::string> &parts)
+bool BitcoinExchange::checkItallDateIsNumber(std::list<std::string> &parts)
 {
     int i = 0;
     int j = 0;
-    for (std::vector<std::string>::iterator it = parts.begin(); it != parts.end(); ++it) {
+    for (std::list<std::string>::iterator it = parts.begin(); it != parts.end(); ++it) {
 
         for(std::string::iterator it2 = it->begin(); it2 != it->end(); ++it2)
         {
@@ -150,14 +151,17 @@ bool BitcoinExchange::checkItallDateIsNumber(std::vector<std::string> &parts)
         
         bool BitcoinExchange::checkFormatdate(std::string &date)
         {
-            std::vector<std::string> parts = split(date, '-');
+            std::list<std::string> parts = split(date, '-');
             if(parts.size() != 3)
                 return false;
             if(checkItallDateIsNumber(parts) == false)
                 return false;
-            std::vector<std::string>::iterator year = parts.begin();
-            std::vector<std::string>::iterator month = parts.begin() + 1;
-            std::vector<std::string>::iterator day = parts.begin() + 2;
+                
+            std::list<std::string>::iterator year = parts.begin();
+            std::list<std::string>::iterator month = year++;
+            std::list<std::string>::iterator day = month++;
+            year--;
+            month--;
             if(checkMonth(*month) == false)
                 return false;
             if(checkDay(*day, *month, *year) == false)
@@ -189,7 +193,7 @@ bool BitcoinExchange::checkItallDateIsNumber(std::vector<std::string> &parts)
             std::string date;
             std::string exchange_rate;
             std::string symbol;
-            std::vector<std::string> parts;
+            std::list<std::string> parts;
             std::pair<int, std::string> store;
             // int i = 0;
             while (std::getline(file, line)) {
@@ -203,10 +207,10 @@ bool BitcoinExchange::checkItallDateIsNumber(std::vector<std::string> &parts)
                     parts.clear();
                     continue;
                 }
-
-                date = parts[0];
-                symbol = parts[1];
-                exchange_rate = parts[2];
+                std::list<std::string>::iterator first = parts.begin();
+                date = *first++;
+                symbol = *first++;
+                exchange_rate = *first++;
                 if(containsAlphabet(exchange_rate))
                 {
                     std::cout << "Error: Bad input => " << clone << std::endl;
@@ -247,7 +251,7 @@ bool BitcoinExchange::checkItallDateIsNumber(std::vector<std::string> &parts)
                 
                 _itUp--;
 
-                std::cout << date << " => " << f * _itUp->second << std::endl;
+                std::cout << date << " => " << f << " = " << f * _itUp->second << std::endl;
 
                 parts.clear();
             }
