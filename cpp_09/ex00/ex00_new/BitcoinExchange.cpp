@@ -1,6 +1,8 @@
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::~BitcoinExchange(){};
+BitcoinExchange::~BitcoinExchange(
+){
+};
 
 BitcoinExchange::BitcoinExchange(std::string name, std::string fileExchangeRate)
 {
@@ -11,6 +13,7 @@ BitcoinExchange::BitcoinExchange(std::string name, std::string fileExchangeRate)
     }
     checkBySplitFirstLine(',', file);
     checkBySplitExchanges(file);
+    file.close();
 };
 
 BitcoinExchange::BitcoinExchange(BitcoinExchange const &rhs){
@@ -22,7 +25,7 @@ BitcoinExchange & BitcoinExchange::operator=(BitcoinExchange const &rhs){
     if(this != &rhs){
         _exchangeRate = rhs._exchangeRate;
         _name = rhs._name;
-        buffer.str(rhs.buffer.str());
+        _buffer.str(rhs._buffer.str());
     }
     return (*this);
 }
@@ -132,6 +135,7 @@ bool BitcoinExchange::checkItallDateIsNumber(std::vector<std::string> &parts)
         {
             int d = 0;
             int m = 0;
+
             sscanf(month.c_str(), "%d", &m);
             sscanf(day.c_str(), "%d", &d);
             int max_day = getDaysInMonth(atoi(year.c_str()), m);

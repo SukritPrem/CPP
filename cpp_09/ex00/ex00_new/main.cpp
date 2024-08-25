@@ -9,7 +9,12 @@ int main(int argc, char **argv)
         std::cout << "Error: could not open file." << std::endl;
         return 1;
     }
-    BitcoinExchange(argv[1],"data.csv");
+
+    // BitcoinExchange b("test","test");
+    // BitcoinExchange a(b);
+    BitcoinExchange b(argv[1],"data.csv");
+    BitcoinExchange a(b);
+    return 0;
     // BitcoinExchange("data1.csv","data.csv"); //for testing purposes
     // BitcoinExchange("./test/data1.csv","data.csv"); //for testing purposes
 }

@@ -14,7 +14,7 @@
 class BitcoinExchange {
      private:
         std::string _name;
-        std::stringstream buffer;
+        std::stringstream _buffer;
         std::map<std::time_t, double> _exchangeRate;
     public:
         ~BitcoinExchange(void);
