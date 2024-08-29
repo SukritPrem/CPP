@@ -2,72 +2,68 @@
 
 RPN::RPN(){};
 RPN::~RPN(){};
-void RPN::push(double value){
-    stack.push(value);
-};
-
-double RPN::pop(){
-    if(stack.size() == 0)
-        throw (std::invalid_argument("when pop stack size is Zero."));	
-    double value = stack.top();
-    stack.pop();
-    return value;
-};
 
 RPN::RPN(RPN const &rhs){
     *this = rhs;
 }
 RPN & RPN::operator=(RPN const &rhs){
 	if (this != &rhs) {
-		output = rhs.output;
-        stack = rhs.stack;
+		// output = rhs.output;
+        // stack = rhs.stack;
 	}
 	return (*this);
 }
 
+int RPN::stringToInt(const std::string& str) {
+    int num;
+    std::stringstream ss(str);
+    ss >> num;
+    return num;
+}
 
-answer RPN::evaluate(std::string expression){
-
-    for (unsigned long i = 0; i < expression.length(); i++){
-        if (expression[i] == ' '){
-            continue;
-        }
-        else if (isdigit(expression[i])){
-            std::string number = "";
-            while (i < expression.length() && isdigit(expression[i])){
-                number += expression[i];
-                i++;
-                break;
-            }
-            i--;
-            // std::cout << "number: " << number.c_str() << std::endl;
-            push(atoi(number.c_str()));
-        }
-        else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/'){
-            double a = pop();
-            double b = pop();
-            // std::cout << "a: "<< a << " " << "b: " << b << std::endl;
-            if (expression[i] == '+'){
-                push(b + a);
-            }
-            else if (expression[i] == '-'){
-                push(b - a);
-            }
-            else if (expression[i] == '*'){
-                push(b * a);
-            }
-            else if (expression[i] == '/'){
-                push(b / a);
-            }
-        }
-        else
-        {
-            std::cout << "Error" << std::endl;
-            output.print = false;
-            return output;
+// Function to validate if a string is a number
+bool RPN::isNumber(const std::string& str) {
+    for (size_t i = 0; i < str.size(); ++i) {
+        if (!isdigit(str[i]) && !(i == 0 && (str[i] == '-' || str[i] == '+'))) {  // Handle negative and positive numbers
+            return false;
         }
     }
-    output.print = true;
-    output.number = pop();
-    return output;
-};
+    return true;
+}
+
+void RPN::parseInputToQueue(const std::string& input, std::queue<std::string>& tokens) {
+    std::stringstream ss(input);
+    std::string token;
+
+    while (ss >> token) {
+        // Optional validation check
+        if (!isNumber(token) && token != "+" && token != "-" && token != "*" && token != "/") {
+            std::cerr << "Invalid token: " << token << std::endl;
+            exit(1);  // Exit if an invalid token is found
+        }
+        tokens.push(token);
+    }
+}
+
+int RPN::evaluateRPN(std::queue<std::string>& tokens) {
+    std::stack<int> st;
+
+    while (!tokens.empty()) {
+        std::string token = tokens.front();
+        tokens.pop();
+
+        if (token == "+" || token == "-" || token == "*" || token == "/") {
+            int operand2 = st.top(); st.pop();
+            int operand1 = st.top(); st.pop();
+
+            if (token == "+") st.push(operand1 + operand2);
+            else if (token == "-") st.push(operand1 - operand2);
+            else if (token == "*") st.push(operand1 * operand2);
+            else if (token == "/") st.push(operand1 / operand2);
+        } else {
+            st.push(stringToInt(token));
+        }
+    }
+
+    return st.top();
+}

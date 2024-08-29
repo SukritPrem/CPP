@@ -108,7 +108,9 @@ bool BitcoinExchange::checkItallDateIsNumber(std::list<std::string> &parts)
         bool BitcoinExchange::checkMonth(std::string &month)
         {
             int i = 0;
-            sscanf(month.c_str(), "%d", &i);
+            std::stringstream ss(month);
+            ss >> i;
+            ss.clear();
             if(i < 1 || i > 12)
                 return false;
             return true;
@@ -140,9 +142,12 @@ bool BitcoinExchange::checkItallDateIsNumber(std::list<std::string> &parts)
         {
             int d = 0;
             int m = 0;
-
-            sscanf(month.c_str(), "%d", &m);
-            sscanf(day.c_str(), "%d", &d);
+            std::stringstream mm(month);
+            std::stringstream dd(day);
+            mm >> m;
+            dd >> d;
+            mm.clear();
+            dd.clear();
             int max_day = getDaysInMonth(atoi(year.c_str()), m);
             if(d < 1 || d > max_day)
                 return false;
@@ -157,11 +162,11 @@ bool BitcoinExchange::checkItallDateIsNumber(std::list<std::string> &parts)
             if(checkItallDateIsNumber(parts) == false)
                 return false;
                 
-            std::list<std::string>::iterator year = parts.begin();
-            std::list<std::string>::iterator month = year++;
-            std::list<std::string>::iterator day = month++;
-            year--;
-            month--;
+            std::list<std::string>::iterator it = parts.begin();
+            std::list<std::string>::iterator year = it++;
+            std::list<std::string>::iterator month = it++;
+            std::list<std::string>::iterator day = it++;
+
             if(checkMonth(*month) == false)
                 return false;
             if(checkDay(*day, *month, *year) == false)
@@ -195,65 +200,84 @@ bool BitcoinExchange::checkItallDateIsNumber(std::list<std::string> &parts)
             std::string symbol;
             std::list<std::string> parts;
             std::pair<int, std::string> store;
-            // int i = 0;
+            // int countAlpha = 0;
             while (std::getline(file, line)) {
                 std::istringstream ss(line);
                 std::string clone = line;
+                // std::cout << line << std::endl
                 while(ss >> line)
                     parts.push_back(line);
                 if(parts.size() != 3)
                 {
                     std::cout << "Error: Bad input => " << clone << std::endl;
                     parts.clear();
+                    ss.clear();
                     continue;
                 }
-                std::list<std::string>::iterator first = parts.begin();
-                date = *first++;
-                symbol = *first++;
-                exchange_rate = *first++;
+                ss.clear();
+                ss.seekg(0, std::ios::beg);
+
+                ss >> date;
+                ss >> symbol;
+                ss >> exchange_rate;
+                // std::cout << date << " " << symbol << " " << exchange_rate << std::endl;
+                // exchange_rate = *first++;
                 if(containsAlphabet(exchange_rate))
                 {
                     std::cout << "Error: Bad input => " << clone << std::endl;
                     parts.clear();
+                    ss.clear();
                     continue;
                 }
-
                 double f;
-                sscanf(exchange_rate.c_str(), "%lf", &f);
+                std::stringstream ss1(exchange_rate);
+                ss1 >> f;
                 removeSpaces(date);
 
                 if(!checkFormatdate(date))
                 {
                     std::cout << "Error: Bad input => " << clone << std::endl;
                     parts.clear();
+                    ss.clear();
                     continue;
                 }   
+
                 if(!checkSymbol(symbol))
                 {
                     std::cout << "Error: Bad input => " << clone << std::endl;
                     parts.clear();
+                    ss.clear();
                     continue;
                 }
                 if(f < 0)
                 {
                     std::cout << "Error: not a positive number." << std::endl;
                     parts.clear();
+                    ss.clear();
                     continue;
                 }
                 if(f > static_cast<int>(INT_MAX))
                 {
                     std::cout << "Error: too large a number." << std::endl;
                     parts.clear();
+                    ss.clear();
                     continue;
                 }
-                
-                std::map<std::time_t , double>::const_iterator _itUp = _exchangeRate.upper_bound(stringToTimestamp(date));
-                
-                _itUp--;
 
+                
+                std::map<std::time_t , double>::iterator _itUp = _exchangeRate.upper_bound(stringToTimestamp(date));
+
+                _itUp--;
+                if(_itUp == _exchangeRate.end()){
+                    std::cout << "Not have data in current date." << std::endl;
+                    parts.clear();
+                    ss.clear();
+                    continue;
+                }
                 std::cout << date << " => " << f << " = " << f * _itUp->second << std::endl;
 
                 parts.clear();
+                ss.clear();
             }
         }
 
@@ -280,7 +304,8 @@ bool BitcoinExchange::checkItallDateIsNumber(std::list<std::string> &parts)
                 std::getline(ss, date, ',');
                 std::getline(ss, rate, ',');
                 double f;
-                sscanf(rate.c_str(), "%lf", &f);
+                std::stringstream ss1(rate);
+                ss1 >> f;
                 _exchangeRate.insert(std::pair<std::time_t, double>(stringToTimestamp(date), f));
             }
 

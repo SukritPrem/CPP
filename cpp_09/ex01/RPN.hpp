@@ -1,26 +1,26 @@
 
 #include <stack>
+#include <queue>
 #include <string>
 #include <iostream>
 #include <stdlib.h>
 
-struct answer
-{
-    bool print;
-    int number;
-};
+#include <iostream>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <string>
+#include <cctype>
 
 class RPN
 {
-    private:
-        answer      output;
-        std::stack<double> stack;
     public:
         RPN();
         ~RPN();
         RPN(RPN const &rhs);
         RPN & operator=(RPN const &rhs);
-        void push(double value);
-        double pop();
-        answer evaluate(std::string expression);
+        static int stringToInt(const std::string& str);
+        static bool isNumber(const std::string& str);
+        static void parseInputToQueue(const std::string& input, std::queue<std::string>& tokens);
+        static int evaluateRPN(std::queue<std::string>& tokens);
 };

@@ -4,25 +4,21 @@
 #include <string>
 #include <sstream>
 
-int main (int argc, char **argv) 
-{
-    std::string word;
-
-    if(argc != 2)
-    {
-        return 0;
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        std::cerr << "Error" << std::endl;
+        return 1;
     }
 
-    std::istringstream input(argv[1]);
-    std::string expression = "";
-    RPN stack;
-    while(input >> word)
-    {
-        expression = expression + " " + word;
-    }
-    // std::cout << expression.c_str() << std::endl;
-    answer output = stack.evaluate(expression.c_str());
-    if(output.print)
-        std::cout << output.number << std::endl;
+    std::string input = argv[1];
+    std::queue<std::string> tokens;
 
+    RPN test;
+    test.parseInputToQueue(input, tokens);
+
+    // Evaluate the RPN expression
+    int result = test.evaluateRPN(tokens);
+    std::cout << result << std::endl;
+
+    return 0;
 }
