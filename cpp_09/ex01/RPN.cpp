@@ -8,8 +8,6 @@ RPN::RPN(RPN const &rhs){
 }
 RPN & RPN::operator=(RPN const &rhs){
 	if (this != &rhs) {
-		// output = rhs.output;
-        // stack = rhs.stack;
 	}
 	return (*this);
 }
@@ -21,7 +19,6 @@ int RPN::stringToInt(const std::string& str) {
     return num;
 }
 
-// Function to validate if a string is a number
 bool RPN::isNumber(const std::string& str) {
     for (size_t i = 0; i < str.size(); ++i) {
         if (!isdigit(str[i]) && !(i == 0 && (str[i] == '-' || str[i] == '+'))) {  // Handle negative and positive numbers
@@ -31,11 +28,6 @@ bool RPN::isNumber(const std::string& str) {
     return true;
 }
 
-// struct answer{
-//     bool print;
-//     int value;
-// }
-
 void RPN::parseInputToQueue(const std::string& input, std::queue<std::string>& tokens) {
     std::stringstream ss(input);
     std::string token;
@@ -43,8 +35,8 @@ void RPN::parseInputToQueue(const std::string& input, std::queue<std::string>& t
     while (ss >> token) {
         // Optional validation check
         if (!isNumber(token) && token != "+" && token != "-" && token != "*" && token != "/") {
-            std::cerr << "Invalid token: " << token << std::endl;
-            exit(1);  // Exit if an invalid token is found
+            std::cout << "Invalid token: " << token << std::endl;
+            exit(0); 
         }
         tokens.push(token);
     }
