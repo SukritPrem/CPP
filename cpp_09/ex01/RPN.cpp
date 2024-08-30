@@ -56,6 +56,12 @@ answer RPN::evaluateRPN(std::queue<std::string>& tokens) {
     std::stack<int> st;
     std::stack<char> operand;
     answer output;
+    if(tokens.empty())
+    {
+        output.print = false;
+        return output;
+    }
+    
     while (!tokens.empty()) {
         std::string token = tokens.front();
         tokens.pop();
