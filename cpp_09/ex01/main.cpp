@@ -17,8 +17,10 @@ int main(int argc, char* argv[]) {
     test.parseInputToQueue(input, tokens);
 
     // Evaluate the RPN expression
-    int result = test.evaluateRPN(tokens);
-    std::cout << result << std::endl;
-
+    answer result = test.evaluateRPN(tokens);
+    if(result.print)
+        std::cout << result.value << std::endl;
+    else
+        std::cout << "Error" << std::endl;
     return 0;
 }

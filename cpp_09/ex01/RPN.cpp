@@ -31,6 +31,11 @@ bool RPN::isNumber(const std::string& str) {
     return true;
 }
 
+// struct answer{
+//     bool print;
+//     int value;
+// }
+
 void RPN::parseInputToQueue(const std::string& input, std::queue<std::string>& tokens) {
     std::stringstream ss(input);
     std::string token;
@@ -45,12 +50,21 @@ void RPN::parseInputToQueue(const std::string& input, std::queue<std::string>& t
     }
 }
 
-int RPN::evaluateRPN(std::queue<std::string>& tokens) {
-    std::stack<int> st;
 
+
+answer RPN::evaluateRPN(std::queue<std::string>& tokens) {
+    std::stack<int> st;
+    std::stack<char> operand;
+    answer output;
     while (!tokens.empty()) {
         std::string token = tokens.front();
         tokens.pop();
+        if ((token == "+" || token == "-" || token == "*" || token == "/") && st.empty())
+        {
+            output.value = 0;
+            output.print = false;
+            return output;
+        }
 
         if (token == "+" || token == "-" || token == "*" || token == "/") {
             int operand2 = st.top(); st.pop();
@@ -64,6 +78,7 @@ int RPN::evaluateRPN(std::queue<std::string>& tokens) {
             st.push(stringToInt(token));
         }
     }
-
-    return st.top();
+    output.print = true;
+    output.value = st.top();
+    return output;
 }

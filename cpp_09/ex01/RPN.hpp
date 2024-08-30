@@ -12,6 +12,11 @@
 #include <string>
 #include <cctype>
 
+struct answer{
+    bool print;
+    int value;
+};
+
 class RPN
 {
     public:
@@ -22,5 +27,5 @@ class RPN
         static int stringToInt(const std::string& str);
         static bool isNumber(const std::string& str);
         static void parseInputToQueue(const std::string& input, std::queue<std::string>& tokens);
-        static int evaluateRPN(std::queue<std::string>& tokens);
+        answer evaluateRPN(std::queue<std::string>& tokens);
 };
