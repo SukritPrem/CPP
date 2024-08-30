@@ -24,8 +24,8 @@ class RPN
         ~RPN();
         RPN(RPN const &rhs);
         RPN & operator=(RPN const &rhs);
-        static int stringToInt(const std::string& str);
-        static bool isNumber(const std::string& str);
-        static void parseInputToQueue(const std::string& input, std::queue<std::string>& tokens);
+        int stringToInt(const std::string& str);
+        bool isNumber(const std::string& str);
+        void parseInputToQueue(const std::string& input, std::queue<std::string>& tokens);
         answer evaluateRPN(std::queue<std::string>& tokens);
 };

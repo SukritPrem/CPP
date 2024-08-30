@@ -61,7 +61,7 @@ answer RPN::evaluateRPN(std::queue<std::string>& tokens) {
         output.print = false;
         return output;
     }
-    
+
     while (!tokens.empty()) {
         std::string token = tokens.front();
         tokens.pop();
@@ -74,6 +74,11 @@ answer RPN::evaluateRPN(std::queue<std::string>& tokens) {
 
         if (token == "+" || token == "-" || token == "*" || token == "/") {
             int operand2 = st.top(); st.pop();
+            if(st.empty())
+            {
+                output.print = false;
+                return output;
+            }
             int operand1 = st.top(); st.pop();
 
             if (token == "+") st.push(operand1 + operand2);
