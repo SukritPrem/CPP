@@ -19,13 +19,14 @@ struct answer{
 
 class RPN
 {
+    private:
+        int stringToInt(const std::string& str);
+        bool isNumber(const std::string& str);
     public:
         RPN();
         ~RPN();
         RPN(RPN const &rhs);
         RPN & operator=(RPN const &rhs);
-        int stringToInt(const std::string& str);
-        bool isNumber(const std::string& str);
         void parseInputToQueue(const std::string& input, std::queue<std::string>& tokens);
         answer evaluateRPN(std::queue<std::string>& tokens);
 };

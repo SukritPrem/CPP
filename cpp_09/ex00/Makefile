@@ -10,7 +10,7 @@ HEADERS =  BitcoinExchange.hpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
-	./btc ./test/data1.csv
+	./btc ./data1.csv
 
 $(OBJS): $(HEADERS)
 

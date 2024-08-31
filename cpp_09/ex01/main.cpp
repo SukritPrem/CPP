@@ -9,18 +9,26 @@ int main(int argc, char* argv[]) {
         std::cerr << "Error" << std::endl;
         return 1;
     }
+    try{
 
-    std::string input = argv[1];
-    std::queue<std::string> tokens;
+        std::string input = argv[1];
+        std::queue<std::string> tokens;
 
-    RPN test;
-    test.parseInputToQueue(input, tokens);
+        RPN test;
+        test.parseInputToQueue(input, tokens);
 
-    // Evaluate the RPN expression
-    answer result = test.evaluateRPN(tokens);
-    if(result.print)
-        std::cout << result.value << std::endl;
-    else
-        std::cout << "Error" << std::endl;
+        // Evaluate the RPN expression
+        answer result = test.evaluateRPN(tokens);
+        if(result.print)
+            std::cout << result.value << std::endl;
+}catch(std::invalid_argument e)
+{
+    std::cerr << e.what() << std::endl;
+    return 1;
+}catch(std::exception e)
+{
+    std::cerr << e.what() << std::endl;
+    return 1;
+}
     return 0;
 }

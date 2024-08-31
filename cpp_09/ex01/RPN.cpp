@@ -7,8 +7,7 @@ RPN::RPN(RPN const &rhs){
     *this = rhs;
 }
 RPN & RPN::operator=(RPN const &rhs){
-	if (this != &rhs) {
-	}
+    (void)rhs;
 	return (*this);
 }
 
@@ -35,8 +34,7 @@ void RPN::parseInputToQueue(const std::string& input, std::queue<std::string>& t
     while (ss >> token) {
         // Optional validation check
         if (!isNumber(token) && token != "+" && token != "-" && token != "*" && token != "/") {
-            std::cout << "Invalid token: " << token << std::endl;
-            exit(0); 
+            throw std::invalid_argument("Invalid token: " + token);
         }
         tokens.push(token);
     }
@@ -49,28 +47,18 @@ answer RPN::evaluateRPN(std::queue<std::string>& tokens) {
     std::stack<char> operand;
     answer output;
     if(tokens.empty())
-    {
-        output.print = false;
-        return output;
-    }
+        throw std::invalid_argument("Error");
 
     while (!tokens.empty()) {
         std::string token = tokens.front();
         tokens.pop();
         if ((token == "+" || token == "-" || token == "*" || token == "/") && st.empty())
-        {
-            output.value = 0;
-            output.print = false;
-            return output;
-        }
+            throw std::invalid_argument("Error");
 
         if (token == "+" || token == "-" || token == "*" || token == "/") {
             int operand2 = st.top(); st.pop();
             if(st.empty())
-            {
-                output.print = false;
-                return output;
-            }
+                throw std::invalid_argument("Error");
             int operand1 = st.top(); st.pop();
 
             if (token == "+") st.push(operand1 + operand2);
